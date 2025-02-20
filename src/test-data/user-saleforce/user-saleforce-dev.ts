@@ -1,9 +1,14 @@
-export const dataTest_Allassign = {
-    Email_All : 'pun@aura.com',
-    password_All : 'P@ssw0rd',
+export const testData_allAssignment = {
+    email : 'pun@aura.com',
+    password : 'P@ssw0rd',
+}
 
-    Email_My : 'ebd@aura.com',
-    password_My : 'P@ssw0rd',
+export const testData_myAssignment ={
+    email : 'ebd@aura.com',
+    password : 'P@ssw0rd',
+}
 
-    Email_Error : '',
+export const testData_invalid ={
+    email : 'abc@aura.com ',
+    password : 'pass',
 }
