@@ -1,5 +1,5 @@
-import { Locator, Page, expect, selectors } from "@playwright/test";
-import { urlSaleForcecEnvUAT } from "../test-data/url-saleforce/url-dev-saleforce";
+import { Locator, Page, expect } from "@playwright/test";
+import { urlSaleForcecEnvUAT } from "../test-data/url-saleforce/url-saleforce";
 
 export class AddNewAssignment {
   readonly page: Page;

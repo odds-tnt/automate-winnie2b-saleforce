@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { error } from "console";
+import { urlSaleForcecEnvUAT } from "../test-data/url-saleforce/url-saleforce";
 
 export class LoginPageSaleForce {
   readonly page: Page;
@@ -32,13 +32,13 @@ export class LoginPageSaleForce {
 
   async CheckLoginWinnie2bSaleForceSuccessForAllAssign() {
     await expect(this.page).toHaveURL(
-      "https://sales.uat.winnie2b.com/assignment/all-assignment"
+      urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
     );
   }
 
   async CheckLoginWinnie2bSaleForceSuccessForMyAssign() {
     await expect(this.page).toHaveURL(
-      "https://sales.uat.winnie2b.com/assignment/my-assignment"
+      urlSaleForcecEnvUAT.saleForce_Myassign_HomePage
     );
   }
 

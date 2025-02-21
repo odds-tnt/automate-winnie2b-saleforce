@@ -12,3 +12,8 @@ export const urlSaleForcecEnvUAT = {
     saleForce_Addassignment_Page : 'https://sales.uat.winnie2b.com/assignment/add-assignment',
 
 }
+
+export const PathFileCSV = {
+    CSV_FileAssignment : 'C:/Users/Asus/Downloads/data_assignment_detail_แก้ไข.csv',
+
+}

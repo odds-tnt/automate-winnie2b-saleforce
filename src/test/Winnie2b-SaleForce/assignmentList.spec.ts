@@ -3,7 +3,7 @@ import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import {
   urlSaleForcecEnvDev,
   urlSaleForcecEnvUAT,
-} from "../../test-data/url-saleforce/url-dev-saleforce";
+} from "../../test-data/url-saleforce/url-saleforce";
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { AssignmentPage } from "../../page-object/AssignmentPage";
 

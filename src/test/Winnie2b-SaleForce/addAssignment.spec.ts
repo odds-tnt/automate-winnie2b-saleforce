@@ -2,13 +2,9 @@ import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import {
   urlSaleForcecEnvDev,
   urlSaleForcecEnvUAT,
-} from "../../test-data/url-saleforce/url-dev-saleforce";
+} from "../../test-data/url-saleforce/url-saleforce";
 import { Expect, test } from "@playwright/test";
-import {
-  testData_allAssignment,
-  testData_myAssignment,
-  testData_invalid,
-} from "../../test-data/user-saleforce/user-saleforce-dev";
+import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { AddNewAssignment } from "../../page-object/AddAssignment";
 import { dataTest_VisitForm } from "../../test-data/Data-AssignmentForm/Data-AssignmentForm";
 
@@ -33,48 +29,7 @@ test.describe("ทดสอบระบบ Winnie2b SaleForce", async () => {
     await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
     await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
   });
-
-  test("ทดสอบการเข้าสู่ระบบสำเร็จ(My Assignment)", async ({ page }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_myAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_myAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForMyAssign();
-  });
-
-  test("ควรแสดงข้อผิดพลาดเมื่อไม่ได้กรอก email", async ({ page }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.checkEmailIsEmpty();
-  });
-
-  test("ควรแสดงข้อผิดพลาดเมื่อไม่ได้กรอก password", async ({ page }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_invalid.email
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.checkPasswordIsEmpty();
-  });
-
-  test("ควรแสดงข้อผิดพลาดเมื่อกรอก email หรือ password ไม่ถูกต้อง", async ({
-    page,
-  }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_invalid.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_invalid.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.checkEmailOrPasswordInvalid();
-  });
-
+  
   test("ทดสอบการเพิ่ม Visit Plan แบบ Manual(All Assignment)", async ({
     page,
   }) => {

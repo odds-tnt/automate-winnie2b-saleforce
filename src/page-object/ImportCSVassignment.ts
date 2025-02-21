@@ -1,0 +1,41 @@
+import { Locator, Page, expect } from "@playwright/test";
+import {
+  urlSaleForcecEnvUAT,
+  urlSaleForcecEnvDev,
+  PathFileCSV,
+} from "../test-data/url-saleforce/url-saleforce";
+
+export class ImportCSVassignment {
+  readonly page: Page;
+  readonly add_assignment_button: Locator;
+  readonly importCSV_button: Locator;
+  readonly addCSV_field: Locator;
+  readonly effectiveDate_selected: Locator;
+  readonly confirm_button: Locator;
+  constructor(page: Page) {
+    this.page = page;
+    this.add_assignment_button = page.getByTestId("add-assignment-button");
+    this.importCSV_button = page.getByRole("button", { name: "Import CSV" });
+    this.addCSV_field = page.locator('input[id = "assignment-upload"]');
+    this.effectiveDate_selected = page.getByRole("button", {
+      name: "This month",
+    });
+    this.confirm_button = page.getByRole("button", { name: " Confirm " });
+  }
+
+  async clickButtonAddAssignmentInHomePage() {
+    await this.add_assignment_button.click();
+  }
+
+  async importCSVfileAssignment() {
+    await this.importCSV_button.click();
+    await this.addCSV_field.setInputFiles(
+      PathFileCSV.CSV_FileAssignment
+    );
+    await this.effectiveDate_selected.click();
+    await this.confirm_button.click();
+    await expect(this.page).toHaveURL(
+      urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
+    );
+  }
+}

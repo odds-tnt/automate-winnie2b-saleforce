@@ -1,8 +1,5 @@
-import { Expect, test } from "@playwright/test";
-import {
-  urlSaleForcecEnvDev,
-  urlSaleForcecEnvUAT,
-} from "../../test-data/url-saleforce/url-dev-saleforce";
+import { test } from "@playwright/test";
+import { urlSaleForcecEnvDev, urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce";
 import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import {
   testData_myAssignment,
