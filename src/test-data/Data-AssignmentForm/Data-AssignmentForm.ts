@@ -1,4 +1,4 @@
-export const dataTest_VisitForm = {
+export const dataTestAssignmentForm = {
     StoreType: 'Retailer',
     StoreName: 'ลุงสยาม',
     CustomerName: 'สยาม มาศรี',

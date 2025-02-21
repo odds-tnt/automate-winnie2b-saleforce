@@ -1,4 +1,4 @@
-import { expect, Expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import {
   urlSaleForcecEnvDev,
@@ -20,28 +20,14 @@ test.describe("เข้าหน้ารายการ Assignment", async () 
   test("เข้าหน้ารายการ All Assignment)", async ({ page }) => {
     const loginpagesaleforce = new LoginPageSaleForce(page);
     const assignmentPage = new AssignmentPage(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_allAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_allAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
+    await loginpagesaleforce.loginWinnie2bSaleForce(testData_allAssignment.email, testData_allAssignment.password);
     await assignmentPage.allAssignment();
   });
 
   test("เข้าหน้ารายการ Today Assignment)", async ({ page }) => {
     const loginpagesaleforce = new LoginPageSaleForce(page);
     const assignmentPage = new AssignmentPage(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_allAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_allAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
+    await loginpagesaleforce.loginWinnie2bSaleForce(testData_allAssignment.email, testData_allAssignment.password);
     await assignmentPage.todayAssignment();
   });
 });

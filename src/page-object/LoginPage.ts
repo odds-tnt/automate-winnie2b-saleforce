@@ -18,25 +18,19 @@ export class LoginPageSaleForce {
     this.passwordErrorLabel = page.locator("#password ~ .login-validate");
   }
 
-  async FillEmailForLoginWinnie2bSaleForce(email: string) {
+  async loginWinnie2bSaleForce(email: string, password: string) {
     await this.email.fill(email);
-  }
-
-  async FillPassWordForLoginWinnie2bSaleForce(password: string) {
     await this.password.fill(password);
-  }
-
-  async ClickSubmitForLoginWinnie2bSaleForce() {
     await this.submitButton.click();
   }
 
-  async CheckLoginWinnie2bSaleForceSuccessForAllAssign() {
+  async checkLoginSuccessForAllAssignmentRole() {
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
     );
   }
 
-  async CheckLoginWinnie2bSaleForceSuccessForMyAssign() {
+  async checkLoginSuccessForMyAssignmentRole() {
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Myassign_HomePage
     );

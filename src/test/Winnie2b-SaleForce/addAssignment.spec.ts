@@ -3,10 +3,10 @@ import {
   urlSaleForcecEnvDev,
   urlSaleForcecEnvUAT,
 } from "../../test-data/url-saleforce/url-saleforce";
-import { Expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { AddNewAssignment } from "../../page-object/AddAssignment";
-import { dataTest_VisitForm } from "../../test-data/Data-AssignmentForm/Data-AssignmentForm";
+import { dataTestAssignmentForm } from "../../test-data/Data-AssignmentForm/Data-AssignmentForm";
 
 test.beforeEach(async ({ page }) => {
   await page.goto(urlSaleForcecEnvUAT.saleForceLogInPage_UAT);
@@ -17,138 +17,125 @@ test.afterEach(async ({ page }) => {
   await page.close();
 });
 
-test.describe("ทดสอบระบบ Winnie2b SaleForce", async () => {
-  test("ทดสอบการเข้าสู่ระบบสำเร็จ(All Assignment)", async ({ page }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_allAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_allAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
-  });
-  
-  test("ทดสอบการเพิ่ม Visit Plan แบบ Manual(All Assignment)", async ({
-    page,
-  }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    const addNewAssignment = new AddNewAssignment(page);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_allAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_allAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
-    await addNewAssignment.clickButtonAddAssignmentInHomePage();
-    await addNewAssignment.selectAddNewForCreateVisitPlanManual();
-    await addNewAssignment.selectStoreTypeInVisitPlanForm(
-      dataTest_VisitForm.StoreType
-    );
-    await addNewAssignment.fillStoreNameInVisitPlanForm(
-      dataTest_VisitForm.StoreName
-    );
-    await addNewAssignment.fillCustomerNameInVisitPlanForm(
-      dataTest_VisitForm.CustomerName
-    );
-    await addNewAssignment.fillKnownStoreNameInVisitPlanForm(
-      dataTest_VisitForm.KnowStroeName
-    );
-    await addNewAssignment.fillCustomerIDInVisitPlanForm(
-      dataTest_VisitForm.CustomerID
-    );
-    await addNewAssignment.fillFirstNameInVisitPlanForm(
-      dataTest_VisitForm.FirstName
-    );
-    await addNewAssignment.fillLastNameInVisitPlanForm(
-      dataTest_VisitForm.LastName
-    );
-    await addNewAssignment.fillPhoneNumberInVisitPlanForm(
-      dataTest_VisitForm.PhoneNumber
-    );
-    await addNewAssignment.fillSecondaryPhoneNumberInVisitPlanForm(
-      dataTest_VisitForm.SecondaryPhoneNumber
-    );
-    await addNewAssignment.fillAddressInVisitPlanForm(
-      dataTest_VisitForm.Address
-    );
-    await addNewAssignment.fillDistrictInVisitPlanForm(
-      dataTest_VisitForm.District
-    );
-    await addNewAssignment.fillProvinceInVisitPlanForm(
-      dataTest_VisitForm.Province
-    );
-    await addNewAssignment.fillPostCodeInVisitPlanForm(
-      dataTest_VisitForm.PostCode
-    );
-    await addNewAssignment.fillLatitudeInVisitPlanForm(
-      dataTest_VisitForm.Latitude
-    );
-    await addNewAssignment.fillLongitudeInVisitPlanForm(
-      dataTest_VisitForm.Longitude
-    );
-    await addNewAssignment.SelectedWorkingDayInVisitPlanForm();
-    await addNewAssignment.SelectStartTimeInVisitPlan();
-    await addNewAssignment.SelectEndTimeInVisitPlan();
-    await addNewAssignment.FillCustomerStatusInVisitPlan(
-      dataTest_VisitForm.CustomerStatus
-    );
-    await addNewAssignment.SelectRegisteredDateInVisitPlan();
-    await addNewAssignment.FillRegisteredByInVisitPlan(
-      dataTest_VisitForm.RegisteredBy
-    );
-    await addNewAssignment.FillOutletMasterInVisitPlan(
-      dataTest_VisitForm.OutletMaster
-    );
-    await addNewAssignment.FillSalesOfficeInVisitPlan(
-      dataTest_VisitForm.SalesOffice
-    );
-    await addNewAssignment.FillClassInVisitPlan(dataTest_VisitForm.Class);
-    await addNewAssignment.FillAutonomousInVisitPlan(
-      dataTest_VisitForm.Autonomous
-    );
-    await addNewAssignment.FillSubtradeChannelIDInVisitPlan(
-      dataTest_VisitForm.SubtradeChannelID
-    );
-    await addNewAssignment.FillFrequencyGroupOfRepeatsPurchasedInVisitPlan(
-      dataTest_VisitForm.FrequencyGroupOfRepeatsPurchased
-    );
-    await addNewAssignment.FillVisitWeekInVisitPlan(
-      dataTest_VisitForm.VisitWeek
-    );
-    await addNewAssignment.FillVisitFrequencyInVisitPlan(
-      dataTest_VisitForm.VisitFrequency
-    );
-    await addNewAssignment.FillVisitEveryInVisitPlan(
-      dataTest_VisitForm.VisitEvery
-    );
-    await addNewAssignment.FillCustomerTypeInVisitPlan(
-      dataTest_VisitForm.CustomerType
-    );
-    await addNewAssignment.FillOwnerRoleInVisitPlan(
-      dataTest_VisitForm.OwnerRole
-    );
-    await addNewAssignment.FillOwnerNameInVisitPlan(
-      dataTest_VisitForm.OwnerName
-    );
-    await addNewAssignment.FillOwnerEmailInVisitPlan(
-      dataTest_VisitForm.OwnerEmail
-    );
-    await addNewAssignment.FillVisitByInVisitPlan(dataTest_VisitForm.VisitBy);
-    await addNewAssignment.FillSalesRouteInVisitPlan(
-      dataTest_VisitForm.SalesRoute
-    );
-    await addNewAssignment.FillRDWeeksInVisitPlan(dataTest_VisitForm.RD_Weeks);
-    await addNewAssignment.FillRDFrequencyInVisitPlan(
-      dataTest_VisitForm.RD_Frequency
-    );
-    await addNewAssignment.FillRDEveryInVisitPlan(dataTest_VisitForm.RD_Every);
-    await addNewAssignment.FillVisitMonthInVisitPlan(
-      dataTest_VisitForm.VisitMonth
-    );
-    await addNewAssignment.ClickStartVisitPlan();
-  });
+test("ทดสอบการเพิ่ม Visit Plan แบบ Manual(All Assignment)", async ({
+  page,
+}) => {
+  const loginpagesaleforce = new LoginPageSaleForce(page);
+  const addNewAssignment = new AddNewAssignment(page);
+  await loginpagesaleforce.loginWinnie2bSaleForce(
+    testData_allAssignment.email,
+    testData_allAssignment.password
+  );
+  await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
+  await addNewAssignment.clickButtonAddAssignmentInHomePage();
+  await addNewAssignment.selectAddNewForCreateVisitPlanManual();
+  await addNewAssignment.selectStoreTypeInVisitPlanForm(
+    dataTestAssignmentForm.StoreType
+  );
+  await addNewAssignment.fillStoreNameInVisitPlanForm(
+    dataTestAssignmentForm.StoreName
+  );
+  await addNewAssignment.fillCustomerNameInVisitPlanForm(
+    dataTestAssignmentForm.CustomerName
+  );
+  await addNewAssignment.fillKnownStoreNameInVisitPlanForm(
+    dataTestAssignmentForm.KnowStroeName
+  );
+  await addNewAssignment.fillCustomerIDInVisitPlanForm(
+    dataTestAssignmentForm.CustomerID
+  );
+  await addNewAssignment.fillFirstNameInVisitPlanForm(
+    dataTestAssignmentForm.FirstName
+  );
+  await addNewAssignment.fillLastNameInVisitPlanForm(
+    dataTestAssignmentForm.LastName
+  );
+  await addNewAssignment.fillPhoneNumberInVisitPlanForm(
+    dataTestAssignmentForm.PhoneNumber
+  );
+  await addNewAssignment.fillSecondaryPhoneNumberInVisitPlanForm(
+    dataTestAssignmentForm.SecondaryPhoneNumber
+  );
+  await addNewAssignment.fillAddressInVisitPlanForm(
+    dataTestAssignmentForm.Address
+  );
+  await addNewAssignment.fillDistrictInVisitPlanForm(
+    dataTestAssignmentForm.District
+  );
+  await addNewAssignment.fillProvinceInVisitPlanForm(
+    dataTestAssignmentForm.Province
+  );
+  await addNewAssignment.fillPostCodeInVisitPlanForm(
+    dataTestAssignmentForm.PostCode
+  );
+  await addNewAssignment.fillLatitudeInVisitPlanForm(
+    dataTestAssignmentForm.Latitude
+  );
+  await addNewAssignment.fillLongitudeInVisitPlanForm(
+    dataTestAssignmentForm.Longitude
+  );
+  await addNewAssignment.SelectedWorkingDayInVisitPlanForm();
+  await addNewAssignment.SelectStartTimeInVisitPlan();
+  await addNewAssignment.SelectEndTimeInVisitPlan();
+  await addNewAssignment.FillCustomerStatusInVisitPlan(
+    dataTestAssignmentForm.CustomerStatus
+  );
+  await addNewAssignment.SelectRegisteredDateInVisitPlan();
+  await addNewAssignment.FillRegisteredByInVisitPlan(
+    dataTestAssignmentForm.RegisteredBy
+  );
+  await addNewAssignment.FillOutletMasterInVisitPlan(
+    dataTestAssignmentForm.OutletMaster
+  );
+  await addNewAssignment.FillSalesOfficeInVisitPlan(
+    dataTestAssignmentForm.SalesOffice
+  );
+  await addNewAssignment.FillClassInVisitPlan(dataTestAssignmentForm.Class);
+  await addNewAssignment.FillAutonomousInVisitPlan(
+    dataTestAssignmentForm.Autonomous
+  );
+  await addNewAssignment.FillSubtradeChannelIDInVisitPlan(
+    dataTestAssignmentForm.SubtradeChannelID
+  );
+  await addNewAssignment.FillFrequencyGroupOfRepeatsPurchasedInVisitPlan(
+    dataTestAssignmentForm.FrequencyGroupOfRepeatsPurchased
+  );
+  await addNewAssignment.FillVisitWeekInVisitPlan(
+    dataTestAssignmentForm.VisitWeek
+  );
+  await addNewAssignment.FillVisitFrequencyInVisitPlan(
+    dataTestAssignmentForm.VisitFrequency
+  );
+  await addNewAssignment.FillVisitEveryInVisitPlan(
+    dataTestAssignmentForm.VisitEvery
+  );
+  await addNewAssignment.FillCustomerTypeInVisitPlan(
+    dataTestAssignmentForm.CustomerType
+  );
+  await addNewAssignment.FillOwnerRoleInVisitPlan(
+    dataTestAssignmentForm.OwnerRole
+  );
+  await addNewAssignment.FillOwnerNameInVisitPlan(
+    dataTestAssignmentForm.OwnerName
+  );
+  await addNewAssignment.FillOwnerEmailInVisitPlan(
+    dataTestAssignmentForm.OwnerEmail
+  );
+  await addNewAssignment.FillVisitByInVisitPlan(dataTestAssignmentForm.VisitBy);
+  await addNewAssignment.FillSalesRouteInVisitPlan(
+    dataTestAssignmentForm.SalesRoute
+  );
+  await addNewAssignment.FillRDWeeksInVisitPlan(
+    dataTestAssignmentForm.RD_Weeks
+  );
+  await addNewAssignment.FillRDFrequencyInVisitPlan(
+    dataTestAssignmentForm.RD_Frequency
+  );
+  await addNewAssignment.FillRDEveryInVisitPlan(
+    dataTestAssignmentForm.RD_Every
+  );
+  await addNewAssignment.FillVisitMonthInVisitPlan(
+    dataTestAssignmentForm.VisitMonth
+  );
+  await addNewAssignment.ClickStartVisitPlan();
 });
