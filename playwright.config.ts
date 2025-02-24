@@ -36,6 +36,8 @@ export default defineConfig({
     actionTimeout : 5000,
     trace: 'on-first-retry',
     headless:false,
+    permissions: ['geolocation'],
+    geolocation: { latitude: 13.78789550470887, longitude: 100.53574010921771 },
   },
 
 
