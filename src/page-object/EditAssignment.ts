@@ -1,0 +1,76 @@
+import { Locator, Page, expect } from "@playwright/test";
+import { visit_date } from "../test-data/Data-AssignmentForm/Edit-dataForm";
+import {
+  urlSaleForcecEnvUAT,
+  urlSaleForcecEnvDev,
+} from "../test-data/url-saleforce/url-saleforce";
+
+export class EditAssignment {
+  readonly page: Page;
+  readonly all_button: Locator;
+  readonly search_box: Locator;
+  readonly select_assignment: Locator;
+  readonly edit_assignment_button: Locator;
+  readonly edit_visit_date: Locator;
+  readonly selected_visit_date: Locator;
+  readonly owner_email_input: Locator;
+  readonly save_edit_button: Locator;
+  readonly error_email: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.all_button = page.getByTestId("all-button");
+    this.search_box = page.getByPlaceholder("Search");
+    this.select_assignment = page.getByTestId("assignment-card").first();
+    this.edit_assignment_button = page.getByText("แก้ไข");
+    this.edit_visit_date = page.getByTestId("edit-visit-date");
+    this.selected_visit_date = page.getByLabel(visit_date.visit_date_selected);
+    this.owner_email_input = page.getByTestId("owner-email-input");
+    this.error_email = page.locator('[data-testid="error-email"]');
+    this.save_edit_button = page.getByTestId("save-edit-button");
+    
+  }
+
+  async ClickViewAssignmentShowAll() {
+    await this.all_button.click();
+  }
+
+  async SearchAssignment(StoreName: string) {
+    await this.search_box.fill(StoreName);
+    await expect(this.search_box).not.toBeEmpty();
+  }
+
+  async SelectAssignment() {
+    await this.select_assignment.click();
+  }
+
+  async ClickEditAssignment() {
+    await this.edit_assignment_button.click();
+  }
+
+  async EditVisitDate() {
+    await this.edit_visit_date.click();
+    await this.selected_visit_date.click();
+  }
+
+  async EditOwnerEmail(OwnerEmail: string) {
+    await this.owner_email_input.fill(OwnerEmail);
+  }
+
+  async EditErrorOwnerEmail(OwnerEmail: string) {
+    await this.owner_email_input.fill(OwnerEmail);
+    expect(this.error_email).toBeVisible();
+    expect(this.error_email).toHaveText(
+    'ไม่พบบัญชีอีเมลนี้ในระบบ โปรดตรวจสอบความถูกต้อง หรือยืนยันว่าได้ลงทะเบียนแล้ว')
+  }
+
+  async ClickSaveEdit() {
+    await this.save_edit_button.click();
+  }
+
+  async CheckEditVisitAssignmentSuccess() {
+    await expect(this.page).toHaveURL(
+      urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
+    );
+  }
+}
