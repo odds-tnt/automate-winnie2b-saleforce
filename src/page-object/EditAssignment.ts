@@ -31,44 +31,44 @@ export class EditAssignment {
     
   }
 
-  async ClickViewAssignmentShowAll() {
+  async clickViewAssignmentShowAll() {
     await this.all_button.click();
   }
 
-  async SearchAssignment(StoreName: string) {
+  async searchAssignment(StoreName: string) {
     await this.search_box.fill(StoreName);
     await expect(this.search_box).not.toBeEmpty();
   }
 
-  async SelectAssignment() {
+  async selectAssignment() {
     await this.select_assignment.click();
   }
 
-  async ClickEditAssignment() {
+  async clickEditAssignment() {
     await this.edit_assignment_button.click();
   }
 
-  async EditVisitDate() {
+  async editVisitDate() {
     await this.edit_visit_date.click();
     await this.selected_visit_date.click();
   }
 
-  async EditOwnerEmail(OwnerEmail: string) {
+  async editOwnerEmail(OwnerEmail: string) {
     await this.owner_email_input.fill(OwnerEmail);
   }
 
-  async EditErrorOwnerEmail(OwnerEmail: string) {
+  async editErrorOwnerEmail(OwnerEmail: string) {
     await this.owner_email_input.fill(OwnerEmail);
     expect(this.error_email).toBeVisible();
     expect(this.error_email).toHaveText(
     'ไม่พบบัญชีอีเมลนี้ในระบบ โปรดตรวจสอบความถูกต้อง หรือยืนยันว่าได้ลงทะเบียนแล้ว')
   }
 
-  async ClickSaveEdit() {
+  async clickSaveEdit() {
     await this.save_edit_button.click();
   }
 
-  async CheckEditVisitAssignmentSuccess() {
+  async checkEditVisitAssignmentSuccess() {
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
     );

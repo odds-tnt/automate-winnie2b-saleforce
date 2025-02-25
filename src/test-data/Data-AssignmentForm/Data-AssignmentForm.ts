@@ -1,6 +1,6 @@
 export const dataTestAssignmentForm = {
     StoreType: 'Retailer',
-    StoreName: 'ลุงสยาม',
+    StoreName: 'สยามไทย Store',
     CustomerName: 'สยาม มาศรี',
     KnowStroeName: 'Siam Store Shop',
     CustomerID: '999999',

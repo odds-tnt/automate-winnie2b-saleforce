@@ -5,17 +5,13 @@ import { testData_allAssignment } from "../../test-data/user-saleforce/user-sale
 import { ImportCSVassignment } from "../../page-object/ImportCSVassignment";
 
 test.beforeEach(async ({ page }) => {
-    const loginpagesaleforce = new LoginPageSaleForce(page);
-    await page.goto(urlSaleForcecEnvUAT.saleForceLogInPage_UAT);
-    await loginpagesaleforce.FillEmailForLoginWinnie2bSaleForce(
-      testData_allAssignment.email
-    );
-    await loginpagesaleforce.FillPassWordForLoginWinnie2bSaleForce(
-      testData_allAssignment.password
-    );
-    await loginpagesaleforce.ClickSubmitForLoginWinnie2bSaleForce();
-    await loginpagesaleforce.CheckLoginWinnie2bSaleForceSuccessForAllAssign();
-  });
+  const loginpagesaleforce = new LoginPageSaleForce(page);
+  await page.goto(urlSaleForcecEnvUAT.saleForceLogInPage_UAT);
+  await loginpagesaleforce.loginWinnie2bSaleForce(
+    testData_allAssignment.email,
+    testData_allAssignment.password
+  );
+});
 
 test.afterEach(async ({ page }) => {
     await page.waitForTimeout(5000);

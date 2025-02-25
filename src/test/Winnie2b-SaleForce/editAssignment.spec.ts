@@ -26,24 +26,24 @@ test.afterEach(async ({ page }) => {
 test.describe("ทดสอบระบบ Winnie2b SaleForce", async () => {
   test("ทดสอบการ Edit Assignment", async ({ page }) => {
     const editAssignment = new EditAssignment(page);
-    await editAssignment.ClickViewAssignmentShowAll();
-    await editAssignment.SearchAssignment(dataTestAssignmentForm.StoreName);
+    await editAssignment.clickViewAssignmentShowAll();
+    await editAssignment.searchAssignment(dataTestAssignmentForm.StoreName);
     await page.waitForTimeout(3000);
-    await editAssignment.SelectAssignment();
-    await editAssignment.ClickEditAssignment();
-    await editAssignment.EditVisitDate();
-    await editAssignment.EditOwnerEmail(OwnerEmail.Email);
-    await editAssignment.ClickSaveEdit();
-    await editAssignment.CheckEditVisitAssignmentSuccess();
+    await editAssignment.selectAssignment();
+    await editAssignment.clickEditAssignment();
+    await editAssignment.editVisitDate();
+    await editAssignment.editOwnerEmail(OwnerEmail.Email);
+    await editAssignment.clickSaveEdit();
+    await editAssignment.checkEditVisitAssignmentSuccess();
   });
 
   test("ทดสอบการ Edit Email ที่ไม่มีในระบบ", async ({ page }) => {
     const editAssignment = new EditAssignment(page);
-    await editAssignment.ClickViewAssignmentShowAll();
-    await editAssignment.SearchAssignment(dataTestAssignmentForm.StoreName);
+    await editAssignment.clickViewAssignmentShowAll();
+    await editAssignment.searchAssignment(dataTestAssignmentForm.StoreName);
     await page.waitForTimeout(3000);
-    await editAssignment.SelectAssignment();
-    await editAssignment.ClickEditAssignment();
-    await editAssignment.EditErrorOwnerEmail(OwnerEmail.Email_Error);
+    await editAssignment.selectAssignment();
+    await editAssignment.clickEditAssignment();
+    await editAssignment.editErrorOwnerEmail(OwnerEmail.Email_Error);
   });
 });

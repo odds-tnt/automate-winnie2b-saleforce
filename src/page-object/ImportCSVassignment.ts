@@ -4,6 +4,7 @@ import {
   urlSaleForcecEnvDev,
   PathFileCSV,
 } from "../test-data/url-saleforce/url-saleforce";
+import { PathFileCSV_Assignment } from "../test-data/url-saleforce/url-filePathCSV";
 
 export class ImportCSVassignment {
   readonly page: Page;
@@ -30,7 +31,7 @@ export class ImportCSVassignment {
   async importCSVfileAssignment() {
     await this.importCSV_button.click();
     await this.addCSV_field.setInputFiles(
-      PathFileCSV.CSV_FileAssignment
+      PathFileCSV_Assignment.CSV_FileAssignment
     );
     await this.effectiveDate_selected.click();
     await this.confirm_button.click();
