@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 import { LoginPageSaleForce } from "../../page-object/LoginPage";
-import { urlSaleForcecEnvDev, urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce";
+import {
+  urlSaleForcecEnvDev,
+  urlSaleForcecEnvUAT,
+} from "../../test-data/url-saleforce/url-saleforce";
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { ImportCSVassignment } from "../../page-object/ImportCSVassignment";
 
@@ -14,19 +17,16 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.afterEach(async ({ page }) => {
-    await page.waitForTimeout(5000);
-    await page.close();
-  });
+  await page.waitForTimeout(5000);
+  await page.close();
+});
 
 test.describe("ทดสอบระบบ Winnie2b SaleForce", async () => {
   test("ทดสอบการUploadFileCSV(All Assignment)", async ({ page }) => {
     const importCSVAssignment = new ImportCSVassignment(page);
-    await importCSVAssignment.clickButtonAddAssignmentInHomePage()
-    await importCSVAssignment.importCSVfileAssignment()
+    await importCSVAssignment.clickButtonAddAssignmentInHomePage();
+    await importCSVAssignment.importCSVfileAssignment();
+  });
 
-    
-  })
-
-
-
-})
+  
+});
