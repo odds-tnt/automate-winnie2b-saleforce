@@ -49,76 +49,44 @@ export class DarkSpaceVisitForm {
       .filter({ hasText: "DARKSPACE" })
       .first();
     this.startVisitButton = page.getByTestId("start-visit-button");
-    this.selectedLevel1_1 = page.getByRole("button", {
-      name: "ทำการสั่งซื้อสินค้า",
-    });
-    this.selectedLevel1_1_orderCode = page.getByPlaceholder(
-      "กรอกหมายเลขคำสั่งซื้อ"
-    );
-    this.selectedLevel1_2 = page.getByRole("button", { name: "ไม่สนใจ" });
-    this.selectedLevel1_3 = page.getByRole("button", {
-      name: "เจ้าของไม่สะดวกคุย / ไม่เจอเจ้าของ",
-    });
-    this.selectedLevel1_4 = page.getByRole("button", {
-      name: "ร้านค้าปิดชั่วคราว",
-    });
-    this.selectedLevel1_5 = page.getByRole("button", {
-      name: "ร้านค้าปิดกิจการ",
-    });
-    this.selectedLevel1_6 = page.getByRole("button", {
-      name: "รอตัดสินใจ / รอปรึกษาเจ้าของร้าน",
-    });
-    this.selectedLevel1_7 = page.getByRole("button", {
-      name: "ไม่พบร้านค้าตามพิกัด",
-    });
+
+    //Choice Level 1
+    this.selectedLevel1_1 = page.getByTestId('visit-button-A01');
+    this.selectedLevel1_1_orderCode = page.getByTestId('orderId');
+    this.selectedLevel1_2 = page.getByTestId('visit-button-A02');
+    this.selectedLevel1_3 = page.getByTestId('visit-button-A03');
+    this.selectedLevel1_4 = page.getByTestId('visit-button-A04');
+    this.selectedLevel1_5 = page.getByTestId('visit-button-A05');
+    this.selectedLevel1_6 = page.getByTestId('visit-button-A06');
+    this.selectedLevel1_7 = page.getByTestId('visit-button-A07');
     this.next_level1_button = page.getByRole("button", { name: "ถัดไป" });
-    this.selectedLevel2_1 = page.getByRole("button", {
-      name: "ซื้อจากแพลตฟอร์มอื่น",
-    });
-    this.selectedLevel2_2 = page.getByRole("button", {
-      name: "ชอบการซื้อแบบเดิมมากกว่า",
-    });
-    this.selectedLevel2_3 = page.getByRole("button", {
-      name: "เจ้าของร้านไม่มีสมาร์ทโฟน หรือใช้ไม่เป็น",
-    });
-    this.selectedLevel2_4 = page.getByRole("button", {
-      name: "ต้องการซื้อกับร้านค้าส่งที่รู้จักเท่านั้น",
-    });
-    this.selectedLevel2_5 = page.getByRole("button", {
-      name: "สินค้าในวาบิราคาสูงกว่าที่อื่น ไม่สามารถสั่งซื้อได้",
-    });
-    this.selectedLevel2_6 = page.getByRole("button", {
-      name: "ไม่มั่นใจในการใช้งานแอป",
-    });
-    this.selectedLevel2_7 = page.getByRole("button", {
-      name: "สั่งซื้อสินค้าไม่ถึงขั้นต่ำ",
-    });
-    this.selectedLevel2_8 = page.getByRole("button", {
-      name: "สินค้าเต็มสต็อค",
-    });
-    this.selectedLevel2_9 = page.getByRole("button", { 
-        name: "อื่นๆ" 
-    });
-    this.selectedLevel2_9_Reason = page.getByPlaceholder("ระบุเหตุผล..");
+
+    //Choice Level 2
+    this.selectedLevel2_1 = page.getByTestId('visit-button-B01');
+    this.selectedLevel2_2 = page.getByTestId('visit-button-B02');
+    this.selectedLevel2_3 = page.getByTestId('visit-button-B03');
+    this.selectedLevel2_4 = page.getByTestId('visit-button-B04');
+    this.selectedLevel2_5 = page.getByTestId('visit-button-B05');
+    this.selectedLevel2_6 = page.getByTestId('visit-button-B06');
+    this.selectedLevel2_7 = page.getByTestId('visit-button-B07'); 
+    this.selectedLevel2_8 = page.getByTestId('visit-button-B08');
+    this.selectedLevel2_9 = page.getByTestId('visit-button-B09');
+    this.selectedLevel2_9_Reason = page.getByTestId('reason');
     this.next_level2_button = page.getByRole("button", { name: "ถัดไป" });
-    this.selectedLevel3_1 = page.getByRole("button", { name: "Makro" });
-    this.selectedLevel3_2 = page.getByRole("button", { name: "Shopee" });
-    this.selectedLevel3_3 = page.getByRole("button", { name: "Lazada" });
-    this.selectedLevel3_4 = page.getByRole("button", { name: "Tiktok" });
-    this.selectedLevel3_5 = page.getByRole("button", { name: "โก โฮลเซลล์" });
-    this.selectedLevel3_6 = page.getByRole("button", { name: "อื่น ๆ" });
-    this.selectedLevel3_6_Reason = page.getByPlaceholder("ระบุเหตุผล..");
-    this.selectedLevel3_7 = page.getByRole("button", {
-      name: "ร้านค้าส่งในพื้นที่",
-    });
-    this.selectedLevel3_8 = page.getByRole("button", {
-      name: "ซื้อจากห้างสรรพสินค้า เช่น Makro, Lotus, Big C",
-    });
-    this.selectedLevel3_9 = page.getByRole("button", {
-      name: "ซื้อจากร้านค้าส่ง และห้างสรรพสินค้า",
-    });
+
+    //Choice Level 3
+    this.selectedLevel3_1 = page.getByTestId('visit-button-C01');
+    this.selectedLevel3_2 = page.getByTestId('visit-button-C02');
+    this.selectedLevel3_3 = page.getByTestId('visit-button-C03');
+    this.selectedLevel3_4 = page.getByTestId('visit-button-C04');
+    this.selectedLevel3_5 = page.getByTestId('visit-button-C05');
+    this.selectedLevel3_6 = page.getByTestId('visit-button-C06');
+    this.selectedLevel3_6_Reason = page.getByTestId('reason');
+    this.selectedLevel3_7 = page.getByTestId('visit-button-C07');
+    this.selectedLevel3_8 = page.getByTestId('visit-button-C08');
+    this.selectedLevel3_9 = page.getByTestId('visit-button-C09');
     this.next_level3_button = page.getByRole("button", { name: "ถัดไป" });
-    this.note_description = page.getByPlaceholder("ระบุข้อมูลเพิ่มเติม..");
+    this.note_description = page.getByTestId('note');
     this.add_Store_visit_image = page.locator('input[id = "image-input"]');
     this.record_visit_button = page.getByRole("button", { name: "บันทึก" });
   }

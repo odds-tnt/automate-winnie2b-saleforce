@@ -5,6 +5,7 @@ import {
   PathFileCSV,
 } from "../test-data/url-saleforce/url-saleforce";
 import { PathFileCSV_Assignment } from "../test-data/url-saleforce/url-filePathCSV";
+import { setTimeout } from "timers/promises";
 
 export class ImportCSVassignment {
   readonly page: Page;
@@ -16,12 +17,10 @@ export class ImportCSVassignment {
   constructor(page: Page) {
     this.page = page;
     this.add_assignment_button = page.getByTestId("add-assignment-button");
-    this.importCSV_button = page.getByRole("button", { name: "Import CSV" });
+    this.importCSV_button = page.getByRole("button", { name: /^(นําเข้า CSV|Import CSV)$/ });
     this.addCSV_field = page.locator('input[id = "assignment-upload"]');
-    this.effectiveDate_selected = page.getByRole("button", {
-      name: "This month",
-    });
-    this.confirm_button = page.getByRole("button", { name: " Confirm " });
+    this.effectiveDate_selected = page.getByRole('button', { name: 'เดือนถัดไป เม.ย.' })
+    this.confirm_button = page.getByRole("button", { name: /^\s*(Confirm|ยืนยัน)\s*$/ });
   }
 
   async clickButtonAddAssignmentInHomePage() {
@@ -34,6 +33,7 @@ export class ImportCSVassignment {
       PathFileCSV_Assignment.CSV_FileAssignment
     );
     await this.effectiveDate_selected.click();
+    await this.confirm_button.waitFor({ state: 'visible' });
     await this.confirm_button.click();
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
