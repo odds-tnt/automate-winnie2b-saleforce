@@ -1,5 +1,5 @@
 export const visit_date = {
-    visit_date_selected : 'Friday, February 28',
+    visit_date_selected : 'Monday, March 31',
 }
 
 export const OwnerEmail = {

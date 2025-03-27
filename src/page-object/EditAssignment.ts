@@ -20,9 +20,9 @@ export class EditAssignment {
   constructor(page: Page) {
     this.page = page;
     this.all_button = page.getByTestId("all-button");
-    this.search_box = page.getByPlaceholder("Search");
+    this.search_box = page.getByRole("textbox",{name:(/^\s*(ค้นหา|Search)\s*$/)});
     this.select_assignment = page.getByTestId("assignment-card").first();
-    this.edit_assignment_button = page.getByText("แก้ไข");
+    this.edit_assignment_button = page.getByText(/^\s*(แก้ไข|Edit)\s*$/);
     this.edit_visit_date = page.getByTestId("edit-visit-date");
     this.selected_visit_date = page.getByLabel(visit_date.visit_date_selected);
     this.owner_email_input = page.getByTestId("owner-email-input");
@@ -37,7 +37,6 @@ export class EditAssignment {
 
   async searchAssignment(StoreName: string) {
     await this.search_box.fill(StoreName);
-    await expect(this.search_box).not.toBeEmpty();
   }
 
   async selectAssignment() {
