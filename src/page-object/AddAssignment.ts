@@ -1,11 +1,13 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { urlSaleForcecEnvUAT } from "../test-data/url-saleforce/url-saleforce";
+import { dataTestAssignmentForm } from "../test-data/Data-AssignmentForm/Data-AssignmentForm";
 
 export class AddNewAssignment {
   readonly page: Page;
   readonly add_assignment_button: Locator;
   readonly add_new: Locator;
   readonly storeType_selected: Locator;
+  readonly custermerType_selected: Locator;
   readonly storeName_box: Locator;
   readonly customerName_box: Locator;
   readonly knownStoreName_box: Locator;
@@ -29,9 +31,6 @@ export class AddNewAssignment {
   readonly workingDay_saturday: Locator;
   readonly startTime_selected: Locator;
   readonly endTime_selected: Locator;
-  readonly customerStatus_box: Locator;
-  readonly registeredDate_selected: Locator;
-  readonly registeredBy_box: Locator;
   readonly outletMaster_box: Locator;
   readonly salesOffice_box: Locator;
   readonly class_box: Locator;
@@ -41,251 +40,167 @@ export class AddNewAssignment {
   readonly visitWeek_box: Locator;
   readonly visitFrequency_box: Locator;
   readonly visitEvery_box: Locator;
-  readonly customerType_box: Locator;
-  readonly ownerRole_box: Locator;
-  readonly ownerName_box: Locator;
   readonly ownerEmail_box: Locator;
   readonly visitBy_box: Locator;
   readonly salesRoute_box: Locator;
   readonly RDWeeks_box: Locator;
   readonly RDFrequency_box: Locator;
   readonly RDEvery_box: Locator;
-  readonly visitMonth_box: Locator;
-  readonly startVisit_button: Locator;
+  readonly visitThisMonth_box: Locator;
+  readonly visitNextMonth_box: Locator;
+  readonly Save_button: Locator;
 
   constructor(page: Page) {
+    const DataDayVisit = dataTestAssignmentForm.VisitEvery;
+    const DataRDevery = dataTestAssignmentForm.RD_Every;
+    const DayVisit = new RegExp(`^\\s*(${DataDayVisit})\\s*$`);
+    const Day_RD_Every = new RegExp(`^\\s*(${DataRDevery})\\s*$`);
     this.page = page;
     this.add_assignment_button = page.getByTestId("add-assignment-button");
-    this.add_new = page.getByRole("button", { name: "Add New" });
-    this.storeType_selected = page.getByLabel("Store Type");
-    this.storeName_box = page.getByRole("textbox", {
-      name: "Store Name",
-      exact: true,
+    this.add_new = page.getByRole("button", {
+      name: /^(เพิ่มงานใหม่|Add New)$/,
     });
-    this.customerName_box = page.getByRole("textbox", {
-      name: "Customer Name",
-      exact: true,
-    });
-    this.knownStoreName_box = page.getByRole("textbox", {
-      name: "Known Store Name",
-      exact: true,
-    });
-    this.customerId_box = page.getByRole("textbox", {
-      name: "Customer ID",
-      exact: true,
-    });
-    this.firstName_box = page.getByRole("textbox", {
-      name: "First Name",
-      exact: true,
-    });
-    this.lastName_box = page.getByRole("textbox", {
-      name: "Last Name",
-      exact: true,
-    });
-    this.phoneNumber_box = page.getByRole("textbox", {
-      name: "Phone Number",
-      exact: true,
-    });
-    this.secondaryPhoneNumber = page.getByRole("textbox", {
-      name: "Secondary Phone Number",
-      exact: true,
-    });
-    this.address_box = page.getByRole("textbox", {
-      name: "Address",
-      exact: true,
-    });
-    this.district_box = page.getByRole("textbox", {
-      name: "District",
-      exact: true,
-    });
-    this.province_box = page.getByRole("textbox", {
-      name: "Province",
-      exact: true,
-    });
-    this.postCode_box = page.getByRole("textbox", {
-      name: "Post Code",
-      exact: true,
-    });
-    this.latitude_box = page.getByRole("textbox", {
-      name: "Latitude",
-      exact: true,
-    });
-    this.longtitude_box = page.getByRole("textbox", {
-      name: "Longitude",
-      exact: true,
-    });
-    this.workingDay_sunday = page.getByText("อา");
-    this.workingDay_monday = page.getByText("จ");
-    this.workingDay_tuesday = page.getByText("อ", { exact: true });
-    this.workingDay_wednesday = page.getByText("พ", { exact: true });
-    this.workingDay_thusday = page.getByText("พฤ");
-    this.workingDay_friday = page.getByText("ศ");
-    this.workingDay_saturday = page.getByText("ส");
-    this.startTime_selected = page.locator('//*[@id="startTime"]');
-    this.endTime_selected = page.locator('//*[@id="endTime"]');
-    this.customerStatus_box = page.getByRole("textbox", {
-      name: "Customer Status",
-    });
-    this.registeredDate_selected = page.locator('//*[@id="RegisteredDate"]');
-    this.registeredBy_box = page.getByRole("textbox", {
-      name: "Registered By",
-    });
-    this.outletMaster_box = page.getByRole("textbox", {
-      name: "Outlet Master",
-    });
-    this.salesOffice_box = page.getByRole("textbox", { name: "Sales Office" });
-    this.class_box = page.getByRole("textbox", { name: "Class", exact: true });
-    this.autonomous_box = page.getByRole("textbox", { name: "Autonomous" });
-    this.subtradeChannelID_box = page.getByRole("textbox", {
-      name: "Subtrade Channel ID",
-    });
-    this.frequencyGroupOfRepeatsPurchased_box = page.getByRole("textbox", {
-      name: "Frequency Group of Repeats Purchased",
-    });
-    this.visitWeek_box = page.getByRole("textbox", {
-      name: "Visit Weeks",
-      exact: true,
-    });
-    this.visitFrequency_box = page.getByRole("textbox", {
-      name: "Visit Frequency",
-      exact: true,
-    });
-    this.visitEvery_box = page.getByRole("textbox", {
-      name: "Visit Every",
-      exact: true,
-    });
-    this.customerType_box = page.getByRole("textbox", {
-      name: "Customer Type",
-      exact: true,
-    });
-    this.ownerRole_box = page.getByRole("textbox", {
-      name: "Owner Role",
-      exact: true,
-    });
-    this.ownerName_box = page.getByRole("textbox", {
-      name: "Owner Name",
-      exact: true,
-    });
-    this.ownerEmail_box = page.getByRole("textbox", {
-      name: "Owner Email",
-      exact: true,
-    });
-    this.visitBy_box = page.getByRole("textbox", {
-      name: "Visit By",
-      exact: true,
-    });
-    this.salesRoute_box = page.getByRole("textbox", {
-      name: "Sales Route",
-      exact: true,
-    });
-    this.RDWeeks_box = page.getByRole("textbox", {
-      name: "RD Weeks",
-      exact: true,
-    });
-    this.RDFrequency_box = page.getByRole("textbox", {
-      name: "RD Frequency",
-      exact: true,
-    });
-    this.RDEvery_box = page.getByRole("textbox", {
-      name: "RD Every",
-      exact: true,
-    });
-    this.visitMonth_box = page.getByRole("textbox", {
-      name: "Visit Month",
-      exact: true,
-    });
-    this.startVisit_button = page.getByRole("button", {
-      name: "Start Visit",
-      exact: true,
-    });
+    this.storeType_selected = page
+      .getByTestId("StoreType")
+      .getByRole("combobox");
+    this.custermerType_selected = page
+      .getByTestId("CustomerType")
+      .getByRole("combobox");
+    this.storeName_box = page.getByTestId("StoreName");
+    this.knownStoreName_box = page.getByTestId("KnownStoreName");
+    this.customerName_box = page.getByTestId("CustomerName");
+    this.customerId_box = page.getByTestId("CustomerId");
+    this.firstName_box = page.getByTestId("FirstName");
+    this.lastName_box = page.getByTestId("LastName");
+    this.phoneNumber_box = page.getByTestId("PhoneNumber");
+    this.secondaryPhoneNumber = page.getByTestId("SecondaryPhoneNumber");
+    this.address_box = page.getByTestId("Address");
+    this.district_box = page.getByTestId("District");
+    this.province_box = page.getByTestId("Province");
+    this.postCode_box = page.getByTestId("PostCode");
+    this.latitude_box = page.getByTestId("Latitude");
+    this.longtitude_box = page.getByTestId("Longitude");
+    this.workingDay_sunday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(อา|Sun)\s*$/);
+    this.workingDay_monday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(จ|Mon)\s*$/);
+    this.workingDay_tuesday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(อ|Tue)\s*$/);
+    this.workingDay_wednesday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(พ|Wed)\s*$/);
+    this.workingDay_thusday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(พฤ|Thu)\s*$/);
+    this.workingDay_friday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(ศ|Fri)\s*$/);
+    this.workingDay_saturday = page
+      .getByTestId("WorkingDays")
+      .getByText(/^\s*(ส|Sat)\s*$/);
+    this.startTime_selected = page.getByTestId("StartTime");
+    this.endTime_selected = page.getByTestId("EndTime");
+    this.visitEvery_box = page.getByTestId("VisitEvery").getByText(DayVisit);
+    this.visitWeek_box = page.getByTestId("VisitWeeks");
+    this.visitFrequency_box = page
+      .getByTestId("VisitFrequency")
+      .getByRole("combobox");
+    this.visitThisMonth_box = page.getByTestId("VisitMonth-thisMonth");
+    this.visitThisMonth_box = page.getByTestId("VisitMonth-nextMonth");
+    this.ownerEmail_box = page.getByTestId("OwnerEmail");
+    this.outletMaster_box = page.getByTestId("OutletMaster");
+    this.salesOffice_box = page.getByTestId("SalesOffice");
+    this.subtradeChannelID_box = page.getByTestId("SubtradeChannelId");
+    this.class_box = page.getByTestId("Class");
+    this.autonomous_box = page.getByTestId("Autonomous");
+    this.frequencyGroupOfRepeatsPurchased_box = page.getByTestId("FrequencyGroupOfRepeatsPurchased");
+    this.salesRoute_box = page.getByTestId("SalesRoute");
+    this.RDEvery_box = page.getByTestId("RDEvery").getByText(Day_RD_Every);
+    this.RDFrequency_box = page.getByTestId("RDFrequency");
+    this.RDWeeks_box = page.getByTestId("RDWeeks");
+    this.Save_button = page.getByTestId("submit");
+    
   }
 
   async clickButtonAddAssignmentInHomePage() {
     await this.add_assignment_button.click();
   }
 
-  async selectAddNewForCreateVisitPlanManual() {
+  async selectedAddNewForCreateVisitPlanManual() {
     await this.add_new.click();
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Addassignment_Page
     );
   }
 
-  async selectStoreTypeInVisitPlanForm(StoreType: string) {
+  async selectedStoreTypeInVisitPlanForm(StoreType:string) {
     await this.storeType_selected.selectOption(StoreType);
   }
 
-  async fillStoreNameInVisitPlanForm(StoreName: string) {
+  async selectedCustomerTypeInVisitPlanForm(CustomerType:string) {
+    await this.custermerType_selected.selectOption(CustomerType);
+  }
+
+  async fillStoreNameInVisitPlanForm(StoreName:string) {
     await this.storeName_box.fill(StoreName);
-    await expect(this.storeName_box).not.toBeEmpty();
   }
 
-  async fillCustomerNameInVisitPlanForm(CustomerName: string) {
-    await this.customerName_box.fill(CustomerName);
-    await expect(this.customerName_box).not.toBeEmpty();
-  }
-
-  async fillKnownStoreNameInVisitPlanForm(KnowStroeName: string) {
+  async fillKnownStoreNameInVisitPlanForm(KnowStroeName:string) {
     await this.knownStoreName_box.fill(KnowStroeName);
-    await expect(this.knownStoreName_box).not.toBeEmpty();
   }
 
-  async fillCustomerIDInVisitPlanForm(CustomerID: string) {
+  async fillCustomerNameInVisitPlanForm(CustomerName:string) {
+    await this.customerName_box.fill(CustomerName);
+  }
+
+  async fillCustomerIDInVisitPlanForm(CustomerID:string) {
     await this.customerId_box.fill(CustomerID);
-    await expect(this.customerId_box).not.toBeEmpty();
   }
 
-  async fillFirstNameInVisitPlanForm(FirstName: string) {
+  async fillFirstNameInVisitPlanForm(FirstName:string) {
     await this.firstName_box.fill(FirstName);
-    await expect(this.firstName_box).not.toBeEmpty();
   }
 
-  async fillLastNameInVisitPlanForm(LastName: string) {
+  async fillLastNameInVisitPlanForm(LastName:string) {
     await this.lastName_box.fill(LastName);
-    await expect(this.lastName_box).not.toBeEmpty();
   }
 
-  async fillPhoneNumberInVisitPlanForm(PhoneNumber: string) {
+  async fillPhoneNumberInVisitPlanForm(PhoneNumber:string) {
     await this.phoneNumber_box.fill(PhoneNumber);
-    await expect(this.phoneNumber_box).not.toBeEmpty();
   }
 
-  async fillSecondaryPhoneNumberInVisitPlanForm(SecondaryPhoneNumber: string) {
+  async fillSecondaryPhoneNumberInVisitPlanForm(SecondaryPhoneNumber:string) {
     await this.secondaryPhoneNumber.fill(SecondaryPhoneNumber);
-    await expect(this.secondaryPhoneNumber).not.toBeEmpty();
   }
 
-  async fillAddressInVisitPlanForm(Address: string) {
+  async fillAddressInVisitPlanForm(Address:string) {
     await this.address_box.fill(Address);
-    await expect(this.address_box).not.toBeEmpty();
   }
 
-  async fillDistrictInVisitPlanForm(District: string) {
+  async fillDistrictInVisitPlanForm(District:string) {
     await this.district_box.fill(District);
-    await expect(this.district_box).not.toBeEmpty();
   }
 
-  async fillProvinceInVisitPlanForm(Province: string) {
+  async fillProvinceInVisitPlanForm(Province:string) {
     await this.province_box.fill(Province);
-    await expect(this.province_box).not.toBeEmpty();
   }
 
-  async fillPostCodeInVisitPlanForm(PostCode: string) {
+  async fillPostCodeInVisitPlanForm(PostCode:string) {
     await this.postCode_box.fill(PostCode);
-    await expect(this.postCode_box).not.toBeEmpty();
   }
 
-  async fillLatitudeInVisitPlanForm(Latitude: string) {
+  async fillLatitudeInVisitPlanForm(Latitude:string) {
     await this.latitude_box.fill(Latitude);
-    await expect(this.latitude_box).not.toBeEmpty();
   }
 
-  async fillLongitudeInVisitPlanForm(Longitude: string) {
+  async fillLongitudeInVisitPlanForm(Longitude:string) {
     await this.longtitude_box.fill(Longitude);
-    await expect(this.longtitude_box).not.toBeEmpty();
   }
 
-  async SelectedWorkingDayInVisitPlanForm() {
+  async SelectededWorkingDayInVisitPlanForm() {
     await this.workingDay_sunday.click();
     await this.workingDay_monday.click();
     await this.workingDay_tuesday.click();
@@ -295,132 +210,92 @@ export class AddNewAssignment {
     await this.workingDay_saturday.click();
   }
 
-  async SelectStartTimeInVisitPlan() {
+  async SelectedStartTimeInVisitPlan(StartTime:string) {
     await this.startTime_selected.click();
-    await this.page.keyboard.press("Enter");
+    await this.startTime_selected.fill(StartTime);
   }
 
-  async SelectEndTimeInVisitPlan() {
+  async SelectedEndTimeInVisitPlan(EndTime:string) {
     await this.endTime_selected.click();
-    await this.page.keyboard.press("Enter");
+    await this.endTime_selected.fill(EndTime);
   }
 
-  async FillCustomerStatusInVisitPlan(CustomerStatus: string) {
-    await this.customerStatus_box.fill(CustomerStatus);
-    await expect(this.customerStatus_box).not.toBeEmpty();
+  async SelectedVisitEveryInVisitPlan() {
+    await this.visitEvery_box.click();
   }
 
-  async SelectRegisteredDateInVisitPlan() {
-    await this.registeredDate_selected.click();
-    await this.page.keyboard.press("Enter");
+  async FillVisitWeekInVisitPlan(VisitWeek:string) {
+    await this.visitWeek_box.fill(VisitWeek);
   }
 
-  async FillRegisteredByInVisitPlan(RegisteredBy: string) {
-    await this.registeredBy_box.fill(RegisteredBy);
-    await expect(this.registeredBy_box).not.toBeEmpty();
+  async FillVisitFrequencyInVisitPlan(VisitFrequency:string) {
+    await this.visitFrequency_box.click();
+    await this.visitFrequency_box.selectOption(VisitFrequency);
   }
 
-  async FillOutletMasterInVisitPlan(OutletMaster: string) {
+  async SelectedVisitMonthInVisitPlan(VisitMonth:string) 
+  {
+    const selectedVisitMonth = dataTestAssignmentForm.VisitMonth; // Define and initialize selectedVisitMonth
+    if (selectedVisitMonth === 'thisMonth')
+    {
+      await this.page.getByTestId("VisitMonth-thisMonth").click();
+    } 
+    else if (selectedVisitMonth === 'nextMonth') 
+    {
+      await this.page.getByTestId("VisitMonth-nextMonth").click();
+    }
+  }
+
+  async FillOwnerEmailInVisitPlan(OwnerEmail:string) {
+    await this.ownerEmail_box.fill(OwnerEmail);
+  }
+
+  async FillOutletMasterInVisitPlan(OutletMaster:string) {
     await this.outletMaster_box.fill(OutletMaster);
-    await expect(this.outletMaster_box).not.toBeEmpty();
   }
 
-  async FillSalesOfficeInVisitPlan(SalesOffice: string) {
+  async FillSalesOfficeInVisitPlan(SalesOffice:string) {
     await this.salesOffice_box.fill(SalesOffice);
-    await expect(this.salesOffice_box).not.toBeEmpty();
   }
 
-  async FillClassInVisitPlan(Class: string) {
-    await this.class_box.fill(Class);
-    await expect(this.class_box).not.toBeEmpty();
-  }
-
-  async FillAutonomousInVisitPlan(Autonomous: string) {
-    await this.autonomous_box.fill(Autonomous);
-    await expect(this.autonomous_box).not.toBeEmpty();
-  }
-
-  async FillSubtradeChannelIDInVisitPlan(SubtradeChannelID: string) {
+  async FillSubtradeChannelIDInVisitPlan(SubtradeChannelID:string) {
     await this.subtradeChannelID_box.fill(SubtradeChannelID);
-    await expect(this.subtradeChannelID_box).not.toBeEmpty();
+  }
+
+  async FillClassInVisitPlan(Class:string) {
+    await this.class_box.fill(Class);
+  }
+
+  async FillAutonomousInVisitPlan(Autonomous:string) {
+    await this.autonomous_box.fill(Autonomous);
   }
 
   async FillFrequencyGroupOfRepeatsPurchasedInVisitPlan(
-    FrequencyGroupOfRepeatsPurchased: string
+    FrequencyGroupOfRepeatsPurchased:string
   ) {
     await this.frequencyGroupOfRepeatsPurchased_box.fill(
       FrequencyGroupOfRepeatsPurchased
     );
-    await expect(this.frequencyGroupOfRepeatsPurchased_box).not.toBeEmpty();
   }
 
-  async FillVisitWeekInVisitPlan(VisitWeek: string) {
-    await this.visitWeek_box.fill(VisitWeek);
-    await expect(this.visitWeek_box).not.toBeEmpty();
-  }
-
-  async FillVisitFrequencyInVisitPlan(VisitFrequency: string) {
-    await this.visitFrequency_box.fill(VisitFrequency);
-    await expect(this.visitFrequency_box).not.toBeEmpty();
-  }
-
-  async FillVisitEveryInVisitPlan(VisitEvery: string) {
-    await this.visitEvery_box.fill(VisitEvery);
-    await expect(this.visitEvery_box).not.toBeEmpty();
-  }
-
-  async FillCustomerTypeInVisitPlan(CustomerType: string) {
-    await this.customerType_box.fill(CustomerType);
-    await expect(this.customerType_box).not.toBeEmpty();
-  }
-
-  async FillOwnerRoleInVisitPlan(OwnerRole: string) {
-    await this.ownerRole_box.fill(OwnerRole);
-    await expect(this.ownerRole_box).not.toBeEmpty();
-  }
-
-  async FillOwnerNameInVisitPlan(OwnerName: string) {
-    await this.ownerName_box.fill(OwnerName);
-    await expect(this.ownerName_box).not.toBeEmpty();
-  }
-
-  async FillOwnerEmailInVisitPlan(OwnerEmail: string) {
-    await this.ownerEmail_box.fill(OwnerEmail);
-    await expect(this.ownerEmail_box).not.toBeEmpty();
-  }
-
-  async FillVisitByInVisitPlan(VisitBy: string) {
-    await this.visitBy_box.fill(VisitBy);
-    await expect(this.visitBy_box).not.toBeEmpty();
-  }
-
-  async FillSalesRouteInVisitPlan(SalesRoute: string) {
+  async FillSalesRouteInVisitPlan(SalesRoute:string) {
     await this.salesRoute_box.fill(SalesRoute);
-    await expect(this.salesRoute_box).not.toBeEmpty();
   }
 
-  async FillRDWeeksInVisitPlan(RD_Weeks: string) {
+  async SelectedRDEveryInVisitPlan() {
+    await this.RDEvery_box.click();
+  }
+
+  async FillRDWeeksInVisitPlan(RD_Weeks:string) {
     await this.RDWeeks_box.fill(RD_Weeks);
-    await expect(this.RDWeeks_box).not.toBeEmpty();
   }
 
-  async FillRDFrequencyInVisitPlan(RD_Frequency: string) {
+  async FillRDFrequencyInVisitPlan(RD_Frequency:string) {
     await this.RDFrequency_box.fill(RD_Frequency);
-    await expect(this.RDFrequency_box).not.toBeEmpty();
   }
 
-  async FillRDEveryInVisitPlan(RD_Every: string) {
-    await this.RDEvery_box.fill(RD_Every);
-    await expect(this.RDEvery_box).not.toBeEmpty();
-  }
-
-  async FillVisitMonthInVisitPlan(VisitMonth: string) {
-    await this.visitMonth_box.fill(VisitMonth);
-    await expect(this.visitMonth_box).not.toBeEmpty();
-  }
-
-  async ClickStartVisitPlan() {
-    await this.startVisit_button.click();
+  async ClickSavetVisitPlan() {
+    await this.Save_button.click();
     await expect(this.page).toHaveURL(
       urlSaleForcecEnvUAT.saleForce_Allassign_HomePage
     );

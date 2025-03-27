@@ -17,5 +17,5 @@ export const urlSaleForcecEnvUAT = {
   };
 
 export const PathFileCSV = {
-    CSV_FileAssignment : 'C:/Users/Asus/Downloads/data_assignment_detail_แก้ไข.csv',
+    CSV_FileAssignment : 'src/test-data/exampleFile/data_assignment_for_automation.csv',
 }

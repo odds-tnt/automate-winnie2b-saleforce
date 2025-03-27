@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+"scripts": {
+  "clean:allure-results": "powershell Remove-Item -Path 'allure-results/*' -Force -Recurse",
+  "clean:allure-report": "powershell Remove-Item -Path @('allure-report/data/*', 'allure-report/export/*', 'allure-report/history/*' , 'allure-report/widgets/*') -Force",
+  "test": "npx playwright test",
+  "test:allure": "npx playwright test --reporter allure-playwright"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.1"
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.1",
+    "allure-playwright": "^3.2.0",
+    "rimraf": "^6.0.1"
   }
 }
