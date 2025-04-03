@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import { urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce";
 import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import {

@@ -1,5 +1,4 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { AssignmentDetail } from "./AssignmentDetail";
 
 export class AssignmentList {
   readonly page: Page;
@@ -36,13 +35,13 @@ export class AssignmentList {
   }
 
   async goToAssignmentDetail() {
-    await this.todayAssignmentButton.click();
+    await this.allAssignmentButton.click();
     await this.assignmentCard.click();
     expect(this.displayVisitDate).toBeVisible();
   }
 
   async goToCustomerAssignmentDetail() {
-    await this.todayAssignmentButton.click();
+    await this.allAssignmentButton.click();
     await this.customerAssignment.click();
     expect(this.displayVisitDate).toBeVisible();
   }

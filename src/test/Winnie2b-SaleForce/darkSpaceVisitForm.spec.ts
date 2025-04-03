@@ -2,7 +2,7 @@ import { DarkSpaceVisitForm } from "../../page-object/DarkspaceVisitForm";
 import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import { urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce";
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { data_test_visit_form } from "../../test-data/Data-AssignmentForm/Data-VisitForm";
 
 test.beforeEach(async ({ page }) => {

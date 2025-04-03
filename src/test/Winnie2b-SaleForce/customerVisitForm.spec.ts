@@ -47,7 +47,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceBadDelivered();
@@ -66,7 +66,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceBuyFromDepartmentStore();
@@ -85,7 +85,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceBuyFromStockistInArea();
@@ -104,7 +104,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceWabiProductExpensive();
@@ -123,7 +123,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceProductFullStock();
@@ -142,7 +142,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceOrderLessThenMinimum();
@@ -161,7 +161,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotInterested();
     await visitFormPage.selectVisitChoiceOther();
@@ -180,7 +180,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceNotFoundOwner();
     await visitFormPage.clickSubmitButton();
@@ -196,7 +196,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceShopTemporarilyClosed();
     await visitFormPage.clickSubmitButton();
@@ -212,7 +212,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceShopClosed();
     await visitFormPage.clickSubmitButton();
@@ -228,7 +228,7 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceShopClosed();
     await visitFormPage.addNoteInSummaryPage();
@@ -245,12 +245,10 @@ test.describe("เข้าเยี่ยมลูกค้าของ TNT", a
       testData_allAssignment.password
     );
     await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
-    await assignmentList.goToAssignmentDetail();
+    await assignmentList.goToCustomerAssignmentDetail();
     await assignmentDetail.startVisit();
     await visitFormPage.selectVisitChoiceShopClosed();
     await visitFormPage.addImageInSummaryPage();
     await visitFormPage.clickSubmitButton();
   });
 });
-
-//ยังติดเรื่อง permission location
