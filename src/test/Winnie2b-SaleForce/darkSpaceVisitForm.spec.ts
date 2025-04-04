@@ -4,16 +4,22 @@ import { urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { test } from "@playwright/test";
 import { data_test_visit_form } from "../../test-data/Data-AssignmentForm/Data-VisitForm";
+import {EditAssignment} from "../../page-object/EditAssignment";
+import { dataTestAssignmentForm } from "../../test-data/Data-AssignmentForm/Data-AssignmentForm";
 
 test.beforeEach(async ({ page }) => {
   const loginpagesaleforce = new LoginPageSaleForce(page);
   const darkSpaceVisitForm = new DarkSpaceVisitForm(page);
+  const editAssignment = new EditAssignment(page);
   await page.goto(urlSaleForcecEnvUAT.saleForceLogInPage_UAT);
   await loginpagesaleforce.loginWinnie2bSaleForce(
     testData_allAssignment.email,
     testData_allAssignment.password
   );
   await darkSpaceVisitForm.clickAllAssignmentButton();
+  await editAssignment.searchAssignment(
+    dataTestAssignmentForm.StoreName);
+  await page.waitForTimeout(3000);
   await darkSpaceVisitForm.clickDarkSpaceSelected();
   await darkSpaceVisitForm.clickStartVisitButton();
 });

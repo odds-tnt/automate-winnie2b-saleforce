@@ -4,7 +4,7 @@ export const dataTestAssignmentForm = {
     StoreName: 'สยามไทย Store',
     CustomerName: 'สยาม มาศรี',
     KnowStroeName: 'Siam Store Shop',
-    CustomerID: '508977',
+    CustomerID: '',
     FirstName: 'สยาม',
     LastName: 'มาศรี',
     PhoneNumber: '0933026703',

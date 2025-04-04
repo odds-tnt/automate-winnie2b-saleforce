@@ -5,7 +5,6 @@ import {
   PathFileCSV,
 } from "../test-data/url-saleforce/url-saleforce";
 import { PathFileCSV_Assignment } from "../test-data/url-saleforce/url-filePathCSV";
-import { setTimeout } from "timers/promises";
 
 export class ImportCSVassignment {
   readonly page: Page;
@@ -19,7 +18,11 @@ export class ImportCSVassignment {
     this.add_assignment_button = page.getByTestId("add-assignment-button");
     this.importCSV_button = page.getByRole("button", { name: /^(นําเข้า CSV|Import CSV)$/ });
     this.addCSV_field = page.locator('input[id = "assignment-upload"]');
-    this.effectiveDate_selected = page.getByRole('button', { name: 'เดือนถัดไป เม.ย.' })
+    this.effectiveDate_selected = page.locator('button', { 
+      hasText: 'เดือนนี้' // Matches any button containing "เดือนนี้"
+  }).or(page.locator('button', { 
+      hasText: 'This Month' // Matches any button containing "This Month"
+  }));
     this.confirm_button = page.getByRole("button", { name: /^\s*(Confirm|ยืนยัน)\s*$/ });
   }
 

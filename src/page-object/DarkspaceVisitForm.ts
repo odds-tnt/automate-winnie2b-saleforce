@@ -46,7 +46,7 @@ export class DarkSpaceVisitForm {
     this.allAssignmentButton = page.getByTestId("all-button");
     this.darkSpaceSelected = page
       .locator('[data-testid="customer-label"]')
-      .filter({ hasText: "DARKSPACE" })
+      .filter({hasText: /^\s*(DARKSPACE)\s*$/})
       .first();
     this.startVisitButton = page.getByTestId("start-visit-button");
 
