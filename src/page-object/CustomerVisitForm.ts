@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { data_test_visit_form } from "../test-data/Data-AssignmentForm/Data-VisitForm";
+import { data_test_visit_form } from "../test-data/Data-Form/VisitForm";
 
 export class VisitFormPage {
   readonly page: Page;

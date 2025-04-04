@@ -3,9 +3,9 @@ import { LoginPageSaleForce } from "../../page-object/LoginPage";
 import { urlSaleForcecEnvUAT } from "../../test-data/url-saleforce/url-saleforce";
 import { testData_allAssignment } from "../../test-data/user-saleforce/user-saleforce-dev";
 import { test } from "@playwright/test";
-import { data_test_visit_form } from "../../test-data/Data-AssignmentForm/Data-VisitForm";
+import { data_test_visit_form } from "../../test-data/Data-Form/VisitForm";
 import {EditAssignment} from "../../page-object/EditAssignment";
-import { dataTestAssignmentForm } from "../../test-data/Data-AssignmentForm/Data-AssignmentForm";
+import { dataTestAssignmentFormDarkSpace } from "../../test-data/Data-Form/AssignmentFormDarkSpace";
 
 test.beforeEach(async ({ page }) => {
   const loginpagesaleforce = new LoginPageSaleForce(page);
@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   );
   await darkSpaceVisitForm.clickAllAssignmentButton();
   await editAssignment.searchAssignment(
-    dataTestAssignmentForm.StoreName);
+    dataTestAssignmentFormDarkSpace.StoreName);
   await page.waitForTimeout(3000);
   await darkSpaceVisitForm.clickDarkSpaceSelected();
   await darkSpaceVisitForm.clickStartVisitButton();

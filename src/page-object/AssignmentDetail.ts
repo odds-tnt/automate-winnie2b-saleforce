@@ -1,5 +1,4 @@
 import { Locator, Page, expect} from "@playwright/test";
-import { AssignmentList } from "./AssignmentList";
 
 export class AssignmentDetail{
   readonly page: Page;

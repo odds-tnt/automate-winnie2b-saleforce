@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { urlSaleForcecEnvUAT } from "../test-data/url-saleforce/url-saleforce";
-import { dataTestAssignmentForm } from "../test-data/Data-AssignmentForm/Data-AssignmentForm";
+import { dataTestAssignmentFormDarkSpace} from "../test-data/Data-Form/AssignmentFormDarkSpace";
+import { dataTestAssignmentFormCustomer } from "../test-data/Data-Form/AssignmentFormCustomer";
 
 export class AddNewAssignment {
   readonly page: Page;
@@ -51,8 +52,8 @@ export class AddNewAssignment {
   readonly Save_button: Locator;
 
   constructor(page: Page) {
-    const DataDayVisit = dataTestAssignmentForm.VisitEvery;
-    const DataRDevery = dataTestAssignmentForm.RD_Every;
+    const DataDayVisit = dataTestAssignmentFormDarkSpace.VisitEvery;
+    const DataRDevery = dataTestAssignmentFormDarkSpace.RD_Every;
     const DayVisit = new RegExp(`^\\s*(${DataDayVisit})\\s*$`);
     const Day_RD_Every = new RegExp(`^\\s*(${DataRDevery})\\s*$`);
     this.page = page;
@@ -235,7 +236,7 @@ export class AddNewAssignment {
 
   async SelectedVisitMonthInVisitPlan(VisitMonth:string) 
   {
-    const selectedVisitMonth = dataTestAssignmentForm.VisitMonth; // Define and initialize selectedVisitMonth
+    const selectedVisitMonth = dataTestAssignmentFormDarkSpace.VisitMonth; // Define and initialize selectedVisitMonth
     if (selectedVisitMonth === 'thisMonth')
     {
       await this.page.getByTestId("VisitMonth-thisMonth").click();

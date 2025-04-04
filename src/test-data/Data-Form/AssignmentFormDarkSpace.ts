@@ -1,4 +1,4 @@
-export const dataTestAssignmentForm = {
+export const dataTestAssignmentFormDarkSpace = {
     StoreType: 'Retailer',
     CustomerType: 'TT-DS',
     StoreName: 'สยามไทย Store',
