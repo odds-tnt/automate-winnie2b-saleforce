@@ -10,8 +10,9 @@ export class AddLead {
   readonly registeredBtn: Locator;
   readonly customerIdInput: Locator;
   readonly visitChoiceForRegitered: Locator;
-  readonly ordered: Locator;
+  readonly orderedBtn: Locator;
   readonly orderIdInput: Locator;
+  readonly inconvenientBtn: Locator;
   readonly visitSummary: Locator;
   readonly submitBtn: Locator;
 
@@ -25,8 +26,9 @@ export class AddLead {
     this.registeredBtn = page.getByTestId("visit-button-A13")
     this.customerIdInput = page.getByTestId("orderId"); //ต้องแก้ชื่อ datatestid
     this.visitChoiceForRegitered = page.getByTestId("visit-button-B17");
-    this.ordered = page.getByTestId("visit-button-B17");
+    this.orderedBtn = page.getByTestId("visit-button-B17");
     this.orderIdInput = page.getByTestId("orderId");
+    this.inconvenientBtn = page.getByTestId("visit-button-B18");
     this.visitSummary = page.getByText("ผลการเข้าเยี่ยม");
     this.submitBtn = page.getByTestId("submit-button");
   }
@@ -51,9 +53,15 @@ export class AddLead {
   }
 
   async selectOrdered() {
-    await this.ordered.click();
+    await this.orderedBtn.click();
     await this.orderIdInput.click();
     await this.orderIdInput.fill("00000228");
+    await this.nextBtn.click();
+    expect(this.visitSummary).toBeVisible();
+  }
+
+  async selectInconvenient() {
+    await this.inconvenientBtn.click();
     await this.nextBtn.click();
     expect(this.visitSummary).toBeVisible();
   }

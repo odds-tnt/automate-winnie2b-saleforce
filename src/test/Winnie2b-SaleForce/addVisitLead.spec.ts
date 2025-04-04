@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test.describe("เข้าเยี่ยมร้านค้าใหม่", async () => {
-  test("เข้าเยี่ยมร้านค้าใหม่ ลงทะเบียนแล้ว)", async ({
+  test("เข้าเยี่ยมร้านค้าใหม่: ลงทะเบียนแล้ว)", async ({
     page,
   }) => {
     const loginpagesaleforce = new LoginPageSaleForce(page);
@@ -33,4 +33,24 @@ test.describe("เข้าเยี่ยมร้านค้าใหม่",
     await addLead.selectOrdered();
     await addLead.clickSubmitButton();
   });
+
+  test("เข้าเยี่ยมร้านค้าใหม่: ไม่สะดวกทำการสั่งซื้อในช่วงเวลาเข้าเยี่ยม )", async ({
+    page,
+  }) => {
+    const loginpagesaleforce = new LoginPageSaleForce(page);
+    const displayLead = new LeadList(page);
+    const addLead = new AddLead(page);
+    await loginpagesaleforce.loginWinnie2bSaleForce(
+      testData_allAssignment.email,
+      testData_allAssignment.password
+    );
+    await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
+    await displayLead.leadListPage();
+    await displayLead.leadInfoPage();
+    await addLead.fillLeadInfo();
+    await addLead.selectRegistered();
+    await addLead.selectInconvenient();
+    await addLead.clickSubmitButton();
+  });
+  
 })

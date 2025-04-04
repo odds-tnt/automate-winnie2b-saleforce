@@ -14,18 +14,17 @@ export class VisitFormPage {
   readonly badDeliveredBtn: Locator;
   readonly buyFromDepartmentStoreBtn: Locator;
   readonly buyFromStockistInAreaBtn: Locator;
-  readonly storeNameBox: Locator;
-  readonly productNameBox: Locator;
+  readonly storeNameInput: Locator;
+  readonly productNameInput: Locator;
   readonly wabiProductExpensiveBnt: Locator;
   readonly productFullStockBtn: Locator;
   readonly orderLessThenMinimumBtn: Locator;
   readonly otherBtn: Locator;
-  readonly reasonBox: Locator;
+  readonly reasonInput: Locator;
   readonly notFoundOwnerBtn: Locator;
   readonly shopTemporarilyClosedBtn: Locator;
   readonly shopClosedBtn: Locator;
-  readonly noteBox: Locator;
-  readonly uploadImageBox: Locator;
+  readonly noteInput: Locator;
   readonly uploadImage: Locator;
 
   constructor(page: Page) {
@@ -41,18 +40,18 @@ export class VisitFormPage {
     this.badDeliveredBtn = page.getByTestId("visit-button-B10");
     this.buyFromDepartmentStoreBtn = page.getByTestId("visit-button-B11");
     this.buyFromStockistInAreaBtn = page.getByTestId("visit-button-B12");
-    this.storeNameBox = page.getByTestId("currentStore");
-    this.productNameBox = page.locator("#productName");
+    this.storeNameInput = page.getByTestId("currentStore");
+    this.productNameInput = page.locator("#productName");
     this.wabiProductExpensiveBnt = page.getByTestId("visit-button-B13");
     this.productFullStockBtn = page.getByTestId("visit-button-B14");
     this.orderLessThenMinimumBtn = page.getByTestId("visit-button-B15");
     this.otherBtn = page.getByTestId("visit-button-B16");
-    this.reasonBox = page.getByTestId("reason");
+    this.reasonInput = page.getByTestId("reason");
     this.notFoundOwnerBtn = page.getByTestId("visit-button-A10");
     this.shopTemporarilyClosedBtn = page.getByTestId("visit-button-A11");
     this.shopClosedBtn = page.getByTestId("visit-button-A12");
-    this.noteBox = page.getByTestId("note");
-    this.uploadImageBox = page.locator('input[id = "image-input"]');
+    this.noteInput = page.getByTestId("note");
+    this.uploadImage = page.locator('input[id = "image-input"]');
   }
   //visitChoice 1
   async selectVisitChoiceOrderProduct() {
@@ -89,12 +88,12 @@ export class VisitFormPage {
   //visitChoiceLevel 2-3
   async selectVisitChoiceBuyFromStockistInArea() {
     await this.buyFromStockistInAreaBtn.click();
-    expect(this.storeNameBox).toBeVisible();
+    expect(this.storeNameInput).toBeVisible();
 
-    await this.storeNameBox.click();
-    await this.storeNameBox.fill("ร้านค้าส่ง A");
-    await this.productNameBox.click();
-    await this.productNameBox.fill("สินค้าอุปโภคและบริโภค");
+    await this.storeNameInput.click();
+    await this.storeNameInput.fill("ร้านค้าส่ง A");
+    await this.productNameInput.click();
+    await this.productNameInput.fill("สินค้าอุปโภคและบริโภค");
     await this.nextBtnPage2.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -125,8 +124,8 @@ export class VisitFormPage {
     await this.otherBtn.click();
     // expect(this.reasonBox).toBeVisible();
 
-    await this.reasonBox.click();
-    await this.reasonBox.fill("ติดธุระอยู่");
+    await this.reasonInput.click();
+    await this.reasonInput.fill("ติดธุระอยู่");
     await this.nextBtnPage2.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -154,14 +153,14 @@ export class VisitFormPage {
 
   //summaryAddNote
   async addNoteInSummaryPage() {
-    await this.noteBox.click();
-    await this.noteBox.fill("ลูกค้าต้องการให้เข้ามาใหม่สัปดาห์หน้า");
+    await this.noteInput.click();
+    await this.noteInput.fill("ลูกค้าต้องการให้เข้ามาใหม่สัปดาห์หน้า");
   }
 
   //summaryAddImage
   async addImageInSummaryPage() {
-    await this.uploadImageBox.setInputFiles(
-          data_test_visit_form.darkSpace_ImagePath
+    await this.uploadImage.setInputFiles(
+          data_test_visit_form.customer_ImagePath
         );
   }
 
