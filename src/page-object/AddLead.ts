@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { leadVisitForm } from "../test-data/Data-Form/VisitForm";
 
 export class AddLead {
   readonly page: Page;
@@ -18,6 +19,8 @@ export class AddLead {
   readonly notConvenientToTalkBtn: Locator;
   readonly notInterestedBtn: Locator;
   readonly visitSummary: Locator;
+  readonly noteInput: Locator;
+  readonly uploadImage: Locator;
   readonly submitBtn: Locator;
 
   constructor(page: Page) {
@@ -38,18 +41,18 @@ export class AddLead {
     this.notConvenientToTalkBtn = page.getByTestId("visit-button-B21");
     this.notInterestedBtn = page.getByTestId("visit-button-B22");
     this.visitSummary = page.getByText("ผลการเข้าเยี่ยม");
+    this.noteInput = page.getByTestId("note");
+    this.uploadImage = page.locator('input[id = "image-input"]');
     this.submitBtn = page.getByTestId("submit-button");
   }
 
   async fillLeadInfo() {
     await this.storeNameInput.click();
-    await this.storeNameInput.fill("ร้านป้านง");
+    await this.storeNameInput.fill(leadVisitForm.storeName);
     await this.customerNameInput.click();
-    await this.customerNameInput.fill("นงนุช");
+    await this.customerNameInput.fill(leadVisitForm.customerName);
     await this.addressInput.click();
-    await this.addressInput.fill(
-      "101 ถนนพระราม 6 แขวงพญาไท เขตพญาไท กรุงเทพมหานคร 10400"
-    );
+    await this.addressInput.fill(leadVisitForm.address);
     await this.nextBtn.click();
     // expect(this.displayLeadForm).toBeVisible();
   }
@@ -57,14 +60,14 @@ export class AddLead {
   async selectRegistered() {
     await this.registeredBtn.click();
     await this.customerIdInput.click();
-    await this.customerIdInput.fill("5454");
+    await this.customerIdInput.fill(leadVisitForm.customerId);
     await this.nextBtn.click();
   }
 
   async selectOrdered() {
     await this.orderedBtn.click();
     await this.orderIdInput.click();
-    await this.orderIdInput.fill("00000228");
+    await this.orderIdInput.fill(leadVisitForm.orderId);
     await this.nextBtn.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -103,6 +106,15 @@ export class AddLead {
     await this.nextBtn.click();
     expect(this.visitSummary).toBeVisible();
   }
+
+    async addNoteInSummaryPage() {
+      await this.noteInput.click();
+      await this.noteInput.fill(leadVisitForm.note);
+    }
+  
+    async addImageInSummaryPage() {
+      await this.uploadImage.setInputFiles(leadVisitForm.image);
+    }
 
   async clickSubmitButton() {
     await this.submitBtn.click();

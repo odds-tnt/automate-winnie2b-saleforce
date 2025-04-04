@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { data_test_visit_form } from "../test-data/Data-Form/VisitForm";
+import { customerVisitForm } from "../test-data/Data-Form/VisitForm";
 
 export class VisitFormPage {
   readonly page: Page;
@@ -30,13 +30,15 @@ export class VisitFormPage {
   constructor(page: Page) {
     this.page = page;
     this.nextBtn = page.getByTestId("next-button");
-    this.nextBtnPage2 = page.getByRole('button', { name: 'ถัดไป' });
+    this.nextBtnPage2 = page.getByRole("button", { name: "ถัดไป" });
     this.visitSummary = page.getByText("ผลการเข้าเยี่ยม");
-    this.submitBtn = page.getByRole('button', { name: 'บันทึก' });
+    this.submitBtn = page.getByRole("button", { name: "บันทึก" });
     this.orderBtn = page.getByTestId("visit-button-A08");
     this.inputOrderId = page.getByTestId("orderId");
     this.notOrderBtn = page.getByTestId("visit-button-A09");
-    this.visitChoiceLevelTwo = page.getByText("ไม่สะดวกทำการสั่งซื้อในช่วงเวลาเข้าเยี่ยม"); 
+    this.visitChoiceLevelTwo = page.getByText(
+      "ไม่สะดวกทำการสั่งซื้อในช่วงเวลาเข้าเยี่ยม"
+    );
     this.badDeliveredBtn = page.getByTestId("visit-button-B10");
     this.buyFromDepartmentStoreBtn = page.getByTestId("visit-button-B11");
     this.buyFromStockistInAreaBtn = page.getByTestId("visit-button-B12");
@@ -59,7 +61,7 @@ export class VisitFormPage {
     // expect(this.inputOrderId).toBeVisible();
 
     await this.inputOrderId.click();
-    await this.inputOrderId.fill("000001");
+    await this.inputOrderId.fill(customerVisitForm.orderId);
     await this.nextBtn.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -91,9 +93,9 @@ export class VisitFormPage {
     expect(this.storeNameInput).toBeVisible();
 
     await this.storeNameInput.click();
-    await this.storeNameInput.fill("ร้านค้าส่ง A");
+    await this.storeNameInput.fill(customerVisitForm.storeName);
     await this.productNameInput.click();
-    await this.productNameInput.fill("สินค้าอุปโภคและบริโภค");
+    await this.productNameInput.fill(customerVisitForm.productName);
     await this.nextBtnPage2.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -125,7 +127,7 @@ export class VisitFormPage {
     // expect(this.reasonBox).toBeVisible();
 
     await this.reasonInput.click();
-    await this.reasonInput.fill("ติดธุระอยู่");
+    await this.reasonInput.fill(customerVisitForm.reason);
     await this.nextBtnPage2.click();
     expect(this.visitSummary).toBeVisible();
   }
@@ -154,14 +156,12 @@ export class VisitFormPage {
   //summaryAddNote
   async addNoteInSummaryPage() {
     await this.noteInput.click();
-    await this.noteInput.fill("ลูกค้าต้องการให้เข้ามาใหม่สัปดาห์หน้า");
+    await this.noteInput.fill(customerVisitForm.note);
   }
 
   //summaryAddImage
   async addImageInSummaryPage() {
-    await this.uploadImage.setInputFiles(
-          data_test_visit_form.customer_ImagePath
-        );
+    await this.uploadImage.setInputFiles(customerVisitForm.image);
   }
 
   async clickSubmitButton() {
