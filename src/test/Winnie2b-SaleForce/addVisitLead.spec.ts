@@ -126,4 +126,40 @@ test.describe("เข้าเยี่ยมร้านค้าใหม่",
     await addLead.selectNotInterested();
     await addLead.clickSubmitButton();
   });
+
+  test("เข้าเยี่ยมร้านค้าใหม่ โดยระบุข้อมูลเพิ่มเติม )", async ({ page }) => {
+    const loginpagesaleforce = new LoginPageSaleForce(page);
+    const displayLead = new LeadList(page);
+    const addLead = new AddLead(page);
+    await loginpagesaleforce.loginWinnie2bSaleForce(
+      testData_allAssignment.email,
+      testData_allAssignment.password
+    );
+    await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
+    await displayLead.leadListPage();
+    await displayLead.leadInfoPage();
+    await addLead.fillLeadInfo();
+    await addLead.selectNotRegistered();
+    await addLead.selectWaittingForDecision();
+    await addLead.addNoteInSummaryPage();
+    await addLead.clickSubmitButton();
+  });
+
+  test("เข้าเยี่ยมร้านค้าใหม่ โดยอัปโหลดรูป )", async ({ page }) => {
+    const loginpagesaleforce = new LoginPageSaleForce(page);
+    const displayLead = new LeadList(page);
+    const addLead = new AddLead(page);
+    await loginpagesaleforce.loginWinnie2bSaleForce(
+      testData_allAssignment.email,
+      testData_allAssignment.password
+    );
+    await loginpagesaleforce.checkLoginSuccessForAllAssignmentRole();
+    await displayLead.leadListPage();
+    await displayLead.leadInfoPage();
+    await addLead.fillLeadInfo();
+    await addLead.selectNotRegistered();
+    await addLead.selectWaittingForDecision();
+    await addLead.addImageInSummaryPage();
+    await addLead.clickSubmitButton();
+  });
 });
