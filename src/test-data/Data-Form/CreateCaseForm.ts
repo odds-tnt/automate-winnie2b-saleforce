@@ -1,18 +1,41 @@
-import { CreateCaseForm } from "../../test/Winnie2b-SaleForce/caseList.spec";
+export type CaseType = 'Retailer' | 'Wholesaler' | 'Operation Team' | 'Customer Service';
+export type CaseTopic =
+  | 'Inactive'
+  | 'Rejected'
+  | 'Fraud'
+  | 'Complaint (Retailer, Wholesaler, Operation team, Customer service)'
+  | 'Customer feedback'
+  | 'อื่น ๆ';
 
-export const saleESDCreateCaseToCXM: CreateCaseForm = {
-  type: "Customer Service",
-  topic: "Customer feedback",
-  name: "Case to CXM",
-  detail: "Detail test",
+export type CreateCaseForm = {
+  type: CaseType;
+  topic: CaseTopic;
+  name: string;
+  customerId?: string;
+  outletMaster?: string;
+  detail: string;
 }
 
-export const saleESFCreateCaseToERM: CreateCaseForm = {
-  type: "Retailer",
-  topic: "Inactive",
-  name: "Case to ERM",
-  customerId: "1234567890",
-  outletMaster: "Outlet Master test",
-  detail: "Detail test",
+export function makeCaseToCXM(
+  name: string
+): CreateCaseForm {
+  return {
+    type: "Customer Service",
+    topic: "Customer feedback",
+    name,
+    detail: "Detail test",
+  };
 }
 
+export function makeCaseToERM(
+  name: string,
+): CreateCaseForm {
+  return {
+    type: "Retailer",
+    topic: "Inactive",
+    name,
+    customerId: "1234567890",
+    outletMaster: "Outlet Master test",
+    detail: "Detail test",
+  };
+}

@@ -1,5 +1,3 @@
-import exp from "constants";
-
 export const testData_allAssignment = {
   email: "pun@aura.com",
   password: "P@ssw0rd",
@@ -20,30 +18,51 @@ export const testData_empty = {
   password: " ",
 };
 
-export const testData_SaleESD = {
+export type User = {
+  email: string;
+  password: string;
+  name: string;
+  role: string;
+};
+
+export const testData_SaleESD: User = {
   name: "Ethan Wallace",
   role: "esd",
   email: "esd2568@aura.com",
   password: "P@ssw0rd",
 }
 
-export const testData_SaleESF = {
+export const testData_SaleESF: User = {
   name: "Sophia Bennett",
   role: "esf",
   email: "esf2568@aura.com",
   password: "P@ssw0rd",
 }
 
-export const testData_VP = {
+export const testData_ERM: User = {
+  name: "Olivia Hayes",
+  role: "erm",
+  email: "erm2568@aura.com",
+  password: "P@ssw0rd",
+}
+
+export const testData_CXM: User = {
+  name: "Noah Mitchell",
+  role: "cxm",
+  email: "cxm2568@aura.com",
+  password: "P@ssw0rd",
+}
+
+export const testData_VP: User = {
   name: "Lucas Morgan",
   role: "vp",
   email: "vp2568@aura.com",
   password: "P@ssw0rd",
 }
 
-export const testData_ERM = {
-  name: "Olivia Hayes",
-  role: "erm",
-  email: "erm2568@aura.com",
+export const testData_AVP: User = {
+  name: "Ava Brooks",
+  role: "avp",
+  email: "avp2568@aura.com",
   password: "P@ssw0rd",
 }

@@ -1,221 +1,143 @@
-import { test, expect, Page, Locator, APIRequestContext } from '@playwright/test';
+import { test, expect, Page, APIRequestContext, Browser } from '@playwright/test';
 import { LoginPageSaleForce } from '../../page-object/LoginPage';
-import { testData_ERM, testData_SaleESD, testData_SaleESF, testData_VP } from '../../test-data/user-saleforce/user-saleforce-dev';
+import { testData_AVP as AVP, testData_ERM as ERM, testData_SaleESD as ESD, testData_SaleESF as ESF, testData_VP as VP, testData_CXM as CXM, User } from '../../test-data/user-saleforce/user-saleforce-dev';
 import { urlSaleForcecEnvLocal } from '../../test-data/url-saleforce/url-saleforce';
-import { saleESDCreateCaseToCXM, saleESFCreateCaseToERM } from '../../test-data/Data-Form/CreateCaseForm';
-
-export type CaseType = 'Retailer' | 'Wholesaler' | 'Operation Team' | 'Customer Service';
-export type CaseTopic =
-  | 'Inactive'
-  | 'Rejected'
-  | 'Fraud'
-  | 'Complaint (Retailer, Wholesaler, Operation team, Customer service)'
-  | 'Customer feedback'
-  | 'อื่น ๆ';
-
-export type CreateCaseForm = {
-  type: CaseType;
-  topic: CaseTopic;
-  name: string;
-  customerId?: string;
-  outletMaster?: string;
-  detail: string;
-}
-
-export type User = {
-  name: string;
-  role: string;
-};
-
-export class CreateCasePage {
-  readonly page: Page;
-  readonly caseTypeDropdown: Locator;
-  readonly caseTopicDropdown: Locator;
-  readonly detailTextarea: Locator;
-  readonly caseName: Locator;
-  readonly customerId: Locator;
-  readonly outletMaster: Locator;
-  readonly submitButton: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.caseTypeDropdown = page.locator('[data-testid="caseType"] select');
-    this.caseTopicDropdown = page.locator('[data-testid="caseTopic"] select');
-    this.caseName = page.locator('input[formcontrolname="name"]');
-    this.customerId = page.locator('input[formcontrolname="customerId"]');
-    this.outletMaster = page.locator('input[formcontrolname="outletMaster"]');
-    this.detailTextarea = page.locator('textarea[formcontrolname="detail"]');
-    this.submitButton = page.locator('button.submit-button[type="submit"]');
-  }
-
-  async selectCaseType(type: CaseType) {
-    await this.caseTypeDropdown.selectOption({ label: type });
-  }
-
-  async selectCaseTopic(topic: CaseTopic) {
-    await this.caseTopicDropdown.selectOption({ label: topic });
-  }
-
-  async fillDetail(detail: string) {
-    await this.detailTextarea.fill(detail);
-  }
-
-  async submit() {
-    await this.submitButton.click();
-  }
-
-  async createCase({ type, topic, name, customerId, outletMaster, detail }: CreateCaseForm) {
-    await this.selectCaseType(type);
-    await this.selectCaseTopic(topic);
-    await this.caseName.fill(name);
-    if (customerId) await this.customerId.fill(customerId);
-    if (outletMaster) await this.outletMaster.fill(outletMaster);
-    await this.fillDetail(detail);
-    await this.submit();
-  }
-}
-
-export class CaseListPage {
-  readonly page: Page;
-  readonly filter: Locator;
-  readonly formTitle: Locator;
-  readonly caseData: Locator;
-  readonly confirmVerifyButton: Locator;
-  readonly verifyTab: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.filter = page.locator('.filter');
-    this.caseData = page.locator('[data-testid="case-data"]');
-    this.formTitle = page.locator('form > .title');
-    this.confirmVerifyButton = page.locator('.modal-container button', { hasText: 'ยืนยัน' });
-    this.verifyTab = page.locator('.filter .status.verified');
-  }
-
-  async checkCaseData(expected: CreateCaseForm, user: User) {
-    const card = this.caseCardByTitle(expected.name);
-    await expect(card.locator('.type')).toHaveText(expected.type);
-    await expect(card.locator('.topic')).toHaveText(expected.topic);
-    await expect(card.locator('.text')).toHaveText(expected.detail);
-    await expect(card.locator('[data-testid="profile-name"]')).toContainText(user.name);
-    await expect(card.locator('[data-testid="profile-role"]')).toContainText(new RegExp(user.role, 'i'));
-    if (expected.customerId) {
-      await expect(card.locator('.customer')).toContainText(expected.customerId);
-    }
-    if (expected.outletMaster) {
-      await expect(card.locator('.owner')).toContainText(expected.outletMaster);
-    }
-  }
-
-  async checkCaseVerified(title: string) {
-    const card = this.caseCardByTitle(title);
-    await expect(card.locator('.status-title')).toHaveText(/ตรวจสอบแล้ว/);
-  }
-
-  async gotoPage() {
-    await this.page.click('[data-testid="case-button"]');
-    await expect(this.filter).toBeVisible();
-  }
-
-  async gotoCreateCasePage() {
-    await this.page.click('[data-testid="add-case-button"]');
-    await expect(this.formTitle).toContainText('เคส')
-  }
-  
-  async gotoVerifyTab() {
-    await this.verifyTab.click();
-  }
-
-  async verifyCaseByTitle(title: string) {
-    const card = this.caseCardByTitle(title);
-    const verifyAction = card.locator('.action', { hasText: /ตรวจสอบแล้ว/ });
-    await verifyAction.click();
-    await this.confirmVerifyButton.click();
-  }
-
-  private caseCardByTitle(title: string) {
-    return this.page.locator('.case-card', { has: this.page.locator('.title', { hasText: new RegExp(title, 'i') }) });
-  }
-}
+import { makeCaseToCXM, makeCaseToERM } from '../../test-data/Data-Form/CreateCaseForm';
+import { CaseListPage } from '../../page-object/CaseList';
 
 test('Sale ESD create ticket to CXM and verified by VP', async ({ browser, request }) => {
+  // Prepare case data
   await resetTestData(request);
-  const saleContext = await browser.newContext();
-  const salePage = await saleContext.newPage();
-  await salePage.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
+  const CASE_TO_CXM = makeCaseToCXM('Case to CXM');
+  const CASE_TO_ERM = makeCaseToERM('Case to ERM');
+  const CASE_TO_AVP_1 = makeCaseToCXM('Case to AVP #1');
+  const CASE_TO_AVP_2 = makeCaseToERM('Case to AVP #2');
+
+  const esdCaseList = await newCaseListPage({ browser, for: ESD });
+  const esfCaseList = await newCaseListPage({ browser, for: ESF });
+  const ermCaseList = await newCaseListPage({ browser, for: ERM });
+  const cxmCaseList = await newCaseListPage({ browser, for: CXM });
+  const avpCaseList = await newCaseListPage({ browser, for: AVP });
+  const vpCaseList = await newCaseListPage({ browser, for: VP });
   
-  const loginPage = new LoginPageSaleForce(salePage);
-  await loginPage.loginWinnie2bSaleForce(testData_SaleESD.email, testData_SaleESD.password);
-  
-  const caseListPage = new CaseListPage(salePage);
-  await caseListPage.gotoPage();
-  await caseListPage.gotoCreateCasePage();
-  
-  const createCasePage = new CreateCasePage(salePage);
-  await createCasePage.createCase(saleESDCreateCaseToCXM);
-  await caseListPage.checkCaseData(saleESDCreateCaseToCXM, testData_SaleESD);
+  await esdCaseList.createCase({ for: CASE_TO_CXM });
+  await esdCaseList.checkCaseData({ expected: CASE_TO_CXM, by: ESD });
+  await esfCaseList.createCase({ for: CASE_TO_ERM});
+  await esfCaseList.checkCaseData({ expected: CASE_TO_ERM, by: ESF });
+  await cxmCaseList.createCase({ for: CASE_TO_AVP_1 });
+  await cxmCaseList.checkCaseData({ expected: CASE_TO_AVP_1, by: CXM });
+  await ermCaseList.createCase({ for: CASE_TO_AVP_2 });
+  await ermCaseList.checkCaseData({ expected: CASE_TO_AVP_2, by: ERM });
+
+  await expect(avpCaseList.createCaseButton).not.toBeVisible();
+  await expect(vpCaseList.createCaseButton).not.toBeVisible();
+
+  // Check case visibility
+  await esdCaseList.reload();
+  await esdCaseList.gotoPendingTab();
+  await expect(esdCaseList.cases).toHaveCount(1);
+  await expect(esdCaseList.actionableCases).toHaveCount(0);
+
+  await esfCaseList.reload();
+  await esfCaseList.gotoPendingTab();
+  await expect(esfCaseList.cases).toHaveCount(1);
+  await expect(esdCaseList.actionableCases).toHaveCount(0);
+
+  await ermCaseList.reload();
+  await ermCaseList.gotoPendingTab();
+  await expect(ermCaseList.cases).toHaveCount(4);
+  await expect(ermCaseList.actionableCases).toHaveCount(1);
+  await expect(ermCaseList.actionableCasesByTitle('Case to ERM')).toBeTruthy();
+
+  await cxmCaseList.reload();
+  await cxmCaseList.gotoPendingTab();
+  await expect(cxmCaseList.cases).toHaveCount(4);
+  await expect(cxmCaseList.actionableCases).toHaveCount(1);
+  await expect(cxmCaseList.actionableCasesByTitle('Case to CXM')).toBeTruthy();
+
+  await avpCaseList.reload();
+  await avpCaseList.gotoPendingTab();
+  await expect(avpCaseList.cases).toHaveCount(4);
+  await expect(avpCaseList.actionableCases).toHaveCount(2);
+  await expect(avpCaseList.actionableCasesByTitle('Case to AVP #1')).toBeTruthy();
+  await expect(avpCaseList.actionableCasesByTitle('Case to AVP #2')).toBeTruthy();
+
+  // Check case summary
+  await esdCaseList.checkCaseSummary({ pending: 1, verified: 0, rejected: 0 });
+  await esfCaseList.checkCaseSummary({ pending: 1, verified: 0, rejected: 0 });
+  // ERM, CXM, AVP, AVP should see the same summary
+  await ermCaseList.checkCaseSummary({ pending: 4, verified: 0, rejected: 0 }); 
+  await avpCaseList.checkCaseSummary({ pending: 4, verified: 0, rejected: 0 }); 
+
+  // Proceeed Action
+  await ermCaseList.verifyCaseByTitle('Case to ERM');
+  await ermCaseList.reload();
+  await ermCaseList.gotoPendingTab();
+  await expect(ermCaseList.cases).toHaveCount(3);
+  await ermCaseList.gotoVerifyTab();
+  await expect(ermCaseList.cases).toHaveCount(1);
+  await ermCaseList.gotoRejectTab();
+  await expect(ermCaseList.cases).toHaveCount(0);
+  await ermCaseList.checkCaseSummary({ pending: 3, verified: 1, rejected: 0 });
+
+  await esfCaseList.reload();
+  await esfCaseList.gotoPendingTab();
+  await expect(esfCaseList.cases).toHaveCount(0);
+  await esfCaseList.gotoVerifyTab();
+  await expect(esfCaseList.cases).toHaveCount(1);
+  await esfCaseList.gotoRejectTab();
+  await expect(esfCaseList.cases).toHaveCount(0);
+  await esfCaseList.checkCaseSummary({ pending: 0, verified: 1, rejected: 0 });
+
+  await avpCaseList.rejectCaseByTitle('Case to AVP #1');
+  await avpCaseList.reload();
+  await avpCaseList.gotoPendingTab();
+  await expect(avpCaseList.cases).toHaveCount(2);
+  await avpCaseList.gotoVerifyTab();
+  await expect(avpCaseList.cases).toHaveCount(1);
+  await avpCaseList.gotoRejectTab();
+  await expect(avpCaseList.cases).toHaveCount(1);
+  await avpCaseList.checkCaseSummary({ pending: 2, verified: 1, rejected: 1 });
 
   await escalate(request);
-  await escalate(request);
-
-  const vpContext = await browser.newContext();
-  const vpPage = await vpContext.newPage();
-  await vpPage.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
-
-  const loginPageForVP = new LoginPageSaleForce(vpPage);
-  await loginPageForVP.loginWinnie2bSaleForce(testData_VP.email, testData_VP.password);
-
-  const caseListPageForVP = new CaseListPage(vpPage);
-  await caseListPageForVP.gotoPage();
-  await caseListPageForVP.verifyCaseByTitle(saleESDCreateCaseToCXM.name);
-  await caseListPageForVP.checkCaseVerified(saleESDCreateCaseToCXM.name);
-});
-
-test('Sale ESF create ticket to ERM and rejected by ERM', async ({ browser, request }) => {
-  await resetTestData(request);
-  const saleContext = await browser.newContext();
-  const salePage = await saleContext.newPage();
-  await salePage.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
   
-  const loginPage = new LoginPageSaleForce(salePage);
-  await loginPage.loginWinnie2bSaleForce(testData_SaleESF.email, testData_SaleESF.password);
+  await cxmCaseList.reload();
+  await cxmCaseList.gotoPendingTab();
+  await expect(cxmCaseList.cases).toHaveCount(2);
+  await expect(cxmCaseList.actionableCases).toHaveCount(0);
+  await cxmCaseList.gotoVerifyTab();
+  await expect(cxmCaseList.cases).toHaveCount(1);
+  await cxmCaseList.gotoRejectTab();
+  await expect(cxmCaseList.cases).toHaveCount(1);
+  await cxmCaseList.checkCaseSummary({ pending: 2, verified: 1, rejected: 1 });
   
-  const caseListPage = new CaseListPage(salePage);
-  await caseListPage.gotoPage();
-  await caseListPage.gotoCreateCasePage();
-  
-  const createCasePage = new CreateCasePage(salePage);
-  await createCasePage.createCase(saleESFCreateCaseToERM);
-  await caseListPage.checkCaseData(saleESFCreateCaseToERM, testData_SaleESF);
+  await avpCaseList.reload();
+  await avpCaseList.gotoPendingTab();
+  await expect(avpCaseList.cases).toHaveCount(2);
+  await expect(avpCaseList.actionableCases).toHaveCount(1);
+  await expect(avpCaseList.actionableCasesByTitle('Case to CXM')).toBeTruthy();
 
-  const vpContext = await browser.newContext();
-  const vpPage = await vpContext.newPage();
-  await vpPage.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
-
-  const loginPageForERM = new LoginPageSaleForce(vpPage);
-  await loginPageForERM.loginWinnie2bSaleForce(testData_ERM.email, testData_ERM.password);
-
-  const caseListPageForERM = new CaseListPage(vpPage);
-  await caseListPageForERM.gotoPage();
-  await caseListPageForERM.verifyCaseByTitle(saleESFCreateCaseToERM.name);
-  await caseListPageForERM.checkCaseVerified(saleESFCreateCaseToERM.name);
+  await vpCaseList.reload();
+  await vpCaseList.gotoPendingTab();
+  await expect(vpCaseList.cases).toHaveCount(2);
+  await expect(vpCaseList.actionableCases).toHaveCount(1);
+  await expect(vpCaseList.actionableCasesByTitle('Case to AVP #2')).toBeTruthy();
 });
 
-test('AVP should not see create button', async ({ page }) => {
-  // TODO: Implement login as AVP
-  // TODO: Assert that create button is not visible
-  // Example:
-  // await page.goto('your-app-url');
-  // await expect(page.locator('button#create')).toBeHidden();
-});
+async function newCaseListPage({ browser, for: user }: { browser: Browser, for: User }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await loginAs({ page, for: user });
+  await page.locator('[data-testid="case-button"]').click();
+  const caseListPage = new CaseListPage(page);
+  return caseListPage;
+}
 
-test('VP should not see create button', async ({ page }) => {
-  // TODO: Implement login as VP
-  // TODO: Assert that create button is not visible
-  // Example:
-  // await page.goto('your-app-url');
-  // await expect(page.locator('button#create')).toBeHidden();
-});
+async function loginAs({ page, for: user }: { page: Page, for: User }) {
+  await page.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
+  const login = new LoginPageSaleForce(page);
+  await login.loginWinnie2bSaleForce(user.email, user.password);
+}
 
 async function resetTestData(request: APIRequestContext) {
   const response = await request.post('https://localhost:7192/test/resetcases', {
@@ -233,3 +155,4 @@ async function escalate(request: APIRequestContext) {
   });
   expect(response.ok()).toBeTruthy();
 }
+
