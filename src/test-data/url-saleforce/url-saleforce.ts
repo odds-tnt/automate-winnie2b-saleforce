@@ -1,11 +1,3 @@
-export const urlSaleForcecEnvLocal = {
-  saleForce_LogIn: "http://localhost:4200/",
-  saleForce_AllCase:
-    "http://localhost:4200/case",
-  saleForce_CreateCase:
-    "http://localhost:4200/case/add-case",
-};
-
 export const urlSaleForcecEnvDev = {
   saleForceLogInPage_DEV: "https://sales.dev.winnie2b.com/",
   saleForce_Allassign_HomePage:

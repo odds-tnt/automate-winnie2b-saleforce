@@ -21,9 +21,7 @@ export class LoginPageSaleForce {
   async loginWinnie2bSaleForce(email: string, password: string) {
     await this.email.fill(email);
     await this.password.fill(password);
-    // DON'T forget to change it back
-    // await this.submitButton.click();
-    await this.page.locator("#kc-login").click();
+    await this.submitButton.click();
   }
 
   async checkLoginSuccessForAllAssignmentRole() {

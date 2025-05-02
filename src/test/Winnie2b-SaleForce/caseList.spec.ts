@@ -1,11 +1,11 @@
 import { test, expect, Page, APIRequestContext, Browser } from '@playwright/test';
 import { LoginPageSaleForce } from '../../page-object/LoginPage';
 import { testData_AVP as AVP, testData_ERM as ERM, testData_SaleESD as ESD, testData_SaleESF as ESF, testData_VP as VP, testData_CXM as CXM, User } from '../../test-data/user-saleforce/user-saleforce-dev';
-import { urlSaleForcecEnvLocal } from '../../test-data/url-saleforce/url-saleforce';
+import { urlSaleForcecEnvUAT } from '../../test-data/url-saleforce/url-saleforce';
 import { makeCaseToCXM, makeCaseToERM } from '../../test-data/Data-Form/CreateCaseForm';
 import { CaseListPage } from '../../page-object/CaseList';
 
-test('Sale ESD create ticket to CXM and verified by VP', async ({ browser, request }) => {
+test('Complete case feature flow', async ({ browser, request }) => {
   // Prepare case data
   await resetTestData(request);
   const CASE_TO_CXM = makeCaseToCXM('Case to CXM');
@@ -134,13 +134,13 @@ async function newCaseListPage({ browser, for: user }: { browser: Browser, for: 
 }
 
 async function loginAs({ page, for: user }: { page: Page, for: User }) {
-  await page.goto(urlSaleForcecEnvLocal.saleForce_LogIn);
+  await page.goto(urlSaleForcecEnvUAT.saleForceLogInPage_UAT);
   const login = new LoginPageSaleForce(page);
   await login.loginWinnie2bSaleForce(user.email, user.password);
 }
 
 async function resetTestData(request: APIRequestContext) {
-  const response = await request.post('https://localhost:7192/test/resetcases', {
+  const response = await request.post(`${urlSaleForcecEnvUAT.saleForceLogInPage_UAT}test/resetcases`, {
     ignoreHTTPSErrors: true
   });
   expect(response.ok()).toBeTruthy();
@@ -149,7 +149,7 @@ async function resetTestData(request: APIRequestContext) {
 async function escalate(request: APIRequestContext) {
   const timeToEscalate = new Date();
   timeToEscalate.setHours(timeToEscalate.getHours() + 25);
-  const response = await request.post('https://localhost:7192/test/escalate', {
+  const response = await request.post(`${urlSaleForcecEnvUAT.saleForceLogInPage_UAT}test/escalate`, {
     ignoreHTTPSErrors: true,
     data: timeToEscalate
   });
