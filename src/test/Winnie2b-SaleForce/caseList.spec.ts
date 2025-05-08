@@ -122,6 +122,12 @@ test('Complete case feature flow', async ({ browser, request }) => {
   await expect(vpCaseList.cases).toHaveCount(2);
   await expect(vpCaseList.actionableCases).toHaveCount(1);
   await expect(vpCaseList.actionableCasesByTitle('Case to AVP #2')).toBeTruthy();
+
+  // Escalate with the same time should not afffect any case
+  await escalate(request);
+
+  await expect(avpCaseList.actionableCases).toHaveCount(1);
+  await expect(avpCaseList.actionableCases).toHaveCount(1);
 });
 
 async function newCaseListPage({ browser, for: user }: { browser: Browser, for: User }) {
@@ -139,8 +145,10 @@ async function loginAs({ page, for: user }: { page: Page, for: User }) {
   await login.loginWinnie2bSaleForce(user.email, user.password);
 }
 
+const apihost = 'https://localhost:7192/';
+
 async function resetTestData(request: APIRequestContext) {
-  const response = await request.post(`${urlSaleForcecEnvUAT.saleForceLogInPage_UAT}test/resetcases`, {
+  const response = await request.post(`${apihost}test/resetcases`, {
     ignoreHTTPSErrors: true
   });
   expect(response.ok()).toBeTruthy();
@@ -149,7 +157,7 @@ async function resetTestData(request: APIRequestContext) {
 async function escalate(request: APIRequestContext) {
   const timeToEscalate = new Date();
   timeToEscalate.setHours(timeToEscalate.getHours() + 25);
-  const response = await request.post(`${urlSaleForcecEnvUAT.saleForceLogInPage_UAT}test/escalate`, {
+  const response = await request.post(`${apihost}test/escalate`, {
     ignoreHTTPSErrors: true,
     data: timeToEscalate
   });

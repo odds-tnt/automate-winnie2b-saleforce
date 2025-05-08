@@ -3,8 +3,11 @@ export type CaseTopic =
   | 'Inactive'
   | 'Rejected'
   | 'Fraud'
-  | 'Complaint (Retailer, Wholesaler, Operation team, Customer service)'
-  | 'Customer feedback'
+  | 'Retailer Complaint'
+  | 'Wholesaler Complaint'
+  | 'Operation Team Complaint'
+  | 'Customer Service Complaint'
+  | 'Customer Feedback'
   | 'อื่น ๆ';
 
 export type CreateCaseForm = {
@@ -21,7 +24,7 @@ export function makeCaseToCXM(
 ): CreateCaseForm {
   return {
     type: "Customer Service",
-    topic: "Customer feedback",
+    topic: "Customer Feedback",
     name,
     detail: "Detail test",
   };
